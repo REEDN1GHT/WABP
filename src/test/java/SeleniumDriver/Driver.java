@@ -20,6 +20,7 @@ public class Driver {
         ops.addArguments("--remote-allow-origins=*");
         ops.setCapability("unexpectedAlertBehaviour", "dismiss");
         ops.addArguments("--disable-extensions");
+        ops.setBrowserVersion("116.0.5845.111");
         //ops.addArguments("headless");
         driver = new ChromeDriver(ops);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
