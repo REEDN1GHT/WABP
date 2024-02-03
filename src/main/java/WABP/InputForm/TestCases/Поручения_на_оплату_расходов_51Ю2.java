@@ -1,20 +1,24 @@
 package WABP.InputForm.TestCases;
 
 import Logs.TakesScreenShots;
-import Selenium.WebDriver;
-import WABP.GlobalCases.*;
+import Logs.WriterLogs;
+import SeleniumDriver.Driver;
 import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_OpenComboBox;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
+import WABP.GlobalCases.Auth;
+import WABP.GlobalCases.NovigateToFrorm;
 import jdk.jfr.Name;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertEquals;
 
-public class Поручения_на_оплату_расходов_51Ю2 extends WebDriver {
+public class Поручения_на_оплату_расходов_51Ю2 extends Driver {
+
+    private String ClassName ="Поручение_на_оплату_расходов";
 
     Auth Auth = new Auth();
     NovigateToFrorm NovToForm = new NovigateToFrorm();
@@ -24,7 +28,7 @@ public class Поручения_на_оплату_расходов_51Ю2 extends
     ButtonDelete ButtonDelete = new ButtonDelete();
 
 
-    @Name("Ввод поручения на оплату расходов")
+    @Name("Сохранение: Ввод поручения на оплату расходов")
     @Test
     public void SaveDoc() throws InterruptedException {
         Auth.AuthWABP();
