@@ -1,5 +1,6 @@
 package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
+import jdk.jfr.Name;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -23,4 +24,11 @@ public class ButtonSave {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
     }
+  /*  @Name("Ждем появления окна с сохранением")
+    public void waitSaveDialog()
+    {
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='overlay']")));
+
+    }*/
 }
