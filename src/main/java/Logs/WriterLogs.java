@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class WriterErrors {
+public class WriterLogs {
 
     public void WriteErrorToTXT(String Err, Throwable throwable){
         try {
@@ -20,6 +20,17 @@ public class WriterErrors {
             }
                 BufferedWriter writer = new BufferedWriter(new FileWriter("logs\\Log.txt", true)); // "true" appends to the file
             writer.write(timestamp + ":: " + className + "." + methodName + "---" + Err.replaceAll(",", "\n") + "\n");
+            writer.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void WriteSuccessToTXT(String ClassName){
+        try {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("logs\\Log.txt", true)); // "true" appends to the file
+            writer.write(timestamp + ":: " + ClassName + " --- " + "Success" + "\n");
             writer.close();
         } catch (IOException ex) {
             throw new RuntimeException(ex);

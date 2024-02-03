@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static Selenium.WebDriver.driver;
+import static SeleniumDriver.Driver.driver;
 
 public class Auth {
 

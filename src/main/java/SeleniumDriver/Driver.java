@@ -1,24 +1,15 @@
-package Selenium;
+package SeleniumDriver;
 
-import Logs.TakesScreenShots;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 
 
-public class WebDriver {
+public class Driver {
     public static org.openqa.selenium.WebDriver driver;
     public static WebDriverWait wait;
 
