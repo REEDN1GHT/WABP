@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestSuite">
+    <test name="Test">
+        <classes>
+            <class name="WABP.InputForm.TestCases.Поручения_на_оплату_расходов_51Ю2"/>
+        </classes>
+    </test>
+</suite>

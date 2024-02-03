@@ -13,7 +13,7 @@ import java.util.Date;
 public class TakesScreenShots extends Driver {
 
     public void TakesScreenshotsSuccess(String TestName, String Form) {
-        var sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        var sourceFile = ((TakesScreenshot) Driver.driver).getScreenshotAs(OutputType.FILE);
         String projectPath = System.getProperty("user.dir");
         SimpleDateFormat dateFormatFolder = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
@@ -31,7 +31,7 @@ public class TakesScreenShots extends Driver {
     }
 
     public void TakesScreenshotsErrors(Throwable throwable){
-        var sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        var sourceFile = ((TakesScreenshot) Driver.driver).getScreenshotAs(OutputType.FILE);
         String projectPath = System.getProperty("user.dir");
         String Path = "\\Screenshots\\Errors";
         new File(projectPath + Path).mkdirs();
