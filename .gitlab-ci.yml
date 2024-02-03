@@ -8,10 +8,7 @@ cache:
 test:
   stage: test
   script:
+    - google-chrome --version || chromium-browser --version || echo "Browser not found"
+    - mvn io.qameta.allure:allure-maven:report
     - mvn clean test
-
-deploy:
-  stage: deploy
-  script:
-    - io.qameta.allure:allure-maven:report
 
