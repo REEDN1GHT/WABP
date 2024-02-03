@@ -1,4 +1,4 @@
-image: selenium/standalone-chrome:latest
+image: maven:latest
 
 cache:
   paths:
@@ -8,7 +8,6 @@ cache:
 test:
   stage: test
   script:
-    - google-chrome --version
     - mvn io.qameta.allure:allure-maven:report
     - mvn clean test
 
