@@ -20,12 +20,17 @@ public class ButtonDelete {
 
         WaitModalDelete();
         driver.findElement(By.xpath("//vaadin-button[@buttonyes]")).click();
+        WaitModalDeleteSuccessful();
 
     }
 
     public void WaitModalDelete(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"overlay\"]/flow-component-renderer/div/vaadin-vertical-layout/span")));
+    }
+    public void WaitModalDeleteSuccessful(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Данные удалены']")));
     }
 
 

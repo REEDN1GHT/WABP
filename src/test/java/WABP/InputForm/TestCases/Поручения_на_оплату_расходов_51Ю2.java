@@ -7,14 +7,16 @@ import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_OpenComboBox;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
 import WABP.GlobalCases.Auth;
+import WABP.GlobalCases.MenuSearchForm;
 import WABP.GlobalCases.NovigateToFrorm;
 import io.qameta.allure.Description;
-import jdk.jfr.Name;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
@@ -33,7 +35,7 @@ public class Поручения_на_оплату_расходов_51Ю2 extends
     ButtonDelete ButtonDelete = new ButtonDelete();
 
 
-    @Name("Сохранение: Ввод поручения на оплату расходов")
+
     @Test
     @Description("Сохранение: Ввод поручения на оплату расходов")
     public void SaveDoc() throws InterruptedException {
@@ -127,14 +129,66 @@ public class Поручения_на_оплату_расходов_51Ю2 extends
         BankName.sendKeys(Keys.ENTER);
         ButtonSave.ClickToSave();
         driver.findElement(By.xpath("//*[@id='overlay']/div/div/vaadin-vertical-layout/vaadin-button")).click();
-        ButtonDelete.ClickToDelete();
+        //ButtonDelete.ClickToDelete();
 
     }
 
-    @Name("Ждем пока элемент станет кликабельным после загрузки документа")
+    @Description("Ждем пока элемент станет кликабельным после загрузки документа")
     public void waitClicableElem(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[20]/input")));
 
+    }
+    @Test
+    @Description("Открытие: Поручение на оплату расходов из меню")
+    public void OpenDoc(){
+        MenuSearchForm MSF = new MenuSearchForm();
+        MSF.SearchAndOpenForm("Финансирование" +
+                "/Поручения на оплату расходов" +
+                "/Ввод" +
+                "/Ввод поручений на оплату расходов");
+        WebElement Field = driver.findElement(By.xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[3]/input"));
+        Assert.assertNotNull(Field);
+    }
+
+    @Test(dependsOnMethods = "SaveDoc")
+    public void DeleteDoc(){
+        Auth.AuthWABP();
+        NovToForm.NovigateTo("51Ю2");
+        //-----------------------------------------
+        WebElement Cul_parent = driver.findElement(By
+                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[3]/input"));
+        Cul_parent.click();
+        Cul_parent.sendKeys("7801042446");
+        ExpOpen.waitFocusedElem();
+        Cul_parent.sendKeys(Keys.ENTER);
+        //------------------------------------------
+        WebElement Cul = driver.findElement(By
+                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[4]/input"));
+        Cul.sendKeys("7801042446");
+        ExpOpen.waitFocusedElem();
+        Cul.sendKeys(Keys.ENTER);
+        //------------------------------------------
+        WebElement CDOC = driver.findElement(By
+                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-text-field[11]/input"));
+        CDOC.sendKeys("SaveDoc");
+        //------------------------------------------
+        WebElement BO_Number = driver.findElement(By
+                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[8]/input"));
+        BO_Number.sendKeys("[Нет]");
+        ExpOpen.waitFocusedElem();
+        BO_Number.sendKeys(Keys.ENTER);
+        //------------------------------------------
+        WebElement FO_Number = driver.findElement(By
+                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]/vaadin-vertical-layout/vaadin-scroller/vaadin-vertical-layout/input-form-component-div/vaadin-combo-box[5]/input"));
+        FO_Number.sendKeys("01");
+        ExpOpen.waitFocusedElem();
+        FO_Number.sendKeys(Keys.ENTER);
+        //-----------------------------------------
+        WebElement ButtonOverlayYes = driver.findElement(By
+                .xpath("//vaadin-button[contains(., 'Да')]"));
+        ButtonOverlayYes.click();
+        waitClicableElem();
+        ButtonDelete.ClickToDelete();
     }
 }
