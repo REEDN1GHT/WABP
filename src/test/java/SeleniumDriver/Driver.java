@@ -16,8 +16,8 @@ public class Driver {
 
     @BeforeMethod
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver.exe");
-        //WebDriverManager.chromedriver().setup();
+        //System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
         ops.setCapability("unexpectedAlertBehaviour", "dismiss");
