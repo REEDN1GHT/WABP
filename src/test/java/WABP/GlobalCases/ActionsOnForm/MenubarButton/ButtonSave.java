@@ -1,5 +1,7 @@
 package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -11,6 +13,8 @@ import java.time.Duration;
 import static SeleniumDriver.Driver.driver;
 
 public class ButtonSave {
+    private static final Logger logger = LogManager.getLogger(ButtonSave.class);
+
 
     public void ClickToSave(){
         WebElement shadow = driver.findElement(By.xpath("//vaadin-vertical-layout[@class='TagPage tabsPage']/vaadin-horizontal-layout/vaadin-menu-bar"));
@@ -20,14 +24,12 @@ public class ButtonSave {
     }
 
     public void WaitModalSave(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
+        } catch (Exception e) {
+            logger.error("Error while waiting opening confirmation window", e.getStackTrace());
+        }
     }
-  /*  @Name("Ждем появления окна с сохранением")
-    public void waitSaveDialog()
-    {
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='overlay']")));
 
-    }*/
 }

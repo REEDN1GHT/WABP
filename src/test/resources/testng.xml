@@ -3,6 +3,7 @@
     <test name="Test">
         <classes>
             <class name="WABP.InputForm.TestCases.Поручения_на_оплату_расходов_51Ю2"/>
+            <class name="WABP.GlobalCases.GeneratedTests.DynamicTestGenerator"/>
         </classes>
     </test>
 </suite>

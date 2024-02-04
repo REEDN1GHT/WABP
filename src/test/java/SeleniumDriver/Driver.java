@@ -11,7 +11,7 @@ import java.time.Duration;
 
 
 public class Driver {
-    public static WebDriver driver;
+    public static org.openqa.selenium.WebDriver driver;
     public static WebDriverWait wait;
 
     @BeforeMethod
