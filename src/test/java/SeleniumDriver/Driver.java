@@ -1,6 +1,7 @@
 package SeleniumDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,17 +11,16 @@ import java.time.Duration;
 
 
 public class Driver {
-    public static org.openqa.selenium.WebDriver driver;
+    public static WebDriver driver;
     public static WebDriverWait wait;
 
-    @BeforeClass
+    @BeforeMethod
     public static void setUp() {
-        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\macs0\\Desktop\\work\\WABP_Tests\\src\\test\\java\\SeleniumDriver\\chromedriver.exe");        //WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
         ops.setCapability("unexpectedAlertBehaviour", "dismiss");
         ops.addArguments("--disable-extensions");
-        ops.setBrowserVersion("116.0.5845.111");
         //ops.addArguments("headless");
         driver = new ChromeDriver(ops);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -29,7 +29,7 @@ public class Driver {
     }
 
 
-    @AfterClass
+    @AfterMethod
     public static void tearDown() {
         driver.quit();
     }

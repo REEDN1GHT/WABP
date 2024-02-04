@@ -1,6 +1,6 @@
 package WABP.GlobalCases;
 
-import jdk.jfr.Name;
+import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,7 +17,7 @@ public class NovigateToFrorm {
         waitContentIntoInput();
     }
 
-    @Name("Ожидание Загрузки формы")
+    @Description("Ожидание Загрузки формы")
     public void waitContentIntoInput() {
         var newWait = new WebDriverWait(driver, Duration.ofSeconds(30));
         newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")));
