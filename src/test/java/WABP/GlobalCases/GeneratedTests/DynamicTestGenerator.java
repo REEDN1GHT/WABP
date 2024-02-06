@@ -3,7 +3,7 @@ package WABP.GlobalCases.GeneratedTests;
 import SeleniumDriver.Driver;
 import WABP.GlobalCases.MenuSearchForm;
 import WABP.GlobalCases.Parser.TXT_ParserConnectF;
-import WABP.GlobalCases.Parser.XLSX_ParserMenuObject;
+import WABP.GlobalCases.Parser.ParserMenuObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
@@ -12,12 +12,10 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static SeleniumDriver.Driver.driver;
-
 
 public class DynamicTestGenerator extends Driver {
 
-    XLSX_ParserMenuObject XLSXParserMenuObject = new XLSX_ParserMenuObject();
+    ParserMenuObject XLSXParserMenuObject = new ParserMenuObject();
     TXT_ParserConnectF txtParserConnectF = new TXT_ParserConnectF();
     MenuSearchForm MSF = new MenuSearchForm();
 

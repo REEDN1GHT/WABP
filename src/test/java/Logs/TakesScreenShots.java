@@ -1,10 +1,13 @@
 package Logs;
 
 import SeleniumDriver.Driver;
+import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,9 +25,9 @@ public class TakesScreenShots extends Driver {
         String Path = "\\Screenshots\\"+timestampFolder+"\\"+Form;
         new File(projectPath + Path).mkdirs();
         String fileName = projectPath + Path + "\\" + timestamp + " " + TestName +".png";
-        File File = new File(fileName);
+        File File1 = new File(fileName);
         try {
-            FileUtils.copyFile(sourceFile, File);
+            FileUtils.copyFile(sourceFile, File1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

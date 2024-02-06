@@ -128,6 +128,7 @@ public class Поручения_на_оплату_расходов_51Ю2 extends
         ExpOpen.waitFocusedElem();
         BankName.sendKeys(Keys.ENTER);
         ButtonSave.ClickToSave();
+        TakeScreen.TakesScreenshotsSuccess("Save", "Поручение_на_оплату_расходов");
         driver.findElement(By.xpath("//*[@id='overlay']/div/div/vaadin-vertical-layout/vaadin-button")).click();
         //ButtonDelete.ClickToDelete();
 
