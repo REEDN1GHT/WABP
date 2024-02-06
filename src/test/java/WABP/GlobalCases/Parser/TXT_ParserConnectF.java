@@ -15,7 +15,7 @@ import java.util.List;
 public class TXT_ParserConnectF {
 
     public JSONObject ParserConnectF(){
-        String filePath = "src/test/resources/connectF — копия.txt";
+        String filePath = "src/test/resources/connectF.txt";
         JSONObject ConnectF = new JSONObject();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -40,7 +40,7 @@ public class TXT_ParserConnectF {
             ConnectF.put("value", jsonArray);
 
             // Используйте toString() для вывода без кавычек
-            System.out.println(ConnectF.getJSONArray("value").toString());
+            //System.out.println(ConnectF.getJSONArray("value").toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -34,6 +34,7 @@ public class ButtonDelete {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"overlay\"]/flow-component-renderer/div/vaadin-vertical-layout/span")));
         } catch (Exception e) {
             logger.error("Error while waiting opening confirmation window", e.getStackTrace());
+            throw e;
         }
     }
     public void WaitModalDeleteSuccessful(){
@@ -43,6 +44,7 @@ public class ButtonDelete {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Данные удалены']")));
         } catch (Exception e) {
             logger.error("Error while waiting opening window success", e.getStackTrace());
+            throw e;
         }
     }
 

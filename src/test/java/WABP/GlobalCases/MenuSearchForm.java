@@ -2,6 +2,7 @@ package WABP.GlobalCases;
 
 import SeleniumDriver.Driver;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static SeleniumDriver.Driver.driver;
@@ -25,6 +26,24 @@ public class MenuSearchForm extends Driver {
         String[] parts = FormPath.split("/");
         for (int i = 0; i < parts.length; i++) {
             driver.findElement(By.xpath("//*[text() = '" + parts[i] + "']/parent::*")).click();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void SearchFormContent(String FormPath) {
+        Auth.AuthWABP();
+        String[] parts = FormPath.split("/");
+        for (int i = 0; i < parts.length - 1; i++) {
+            driver.findElement(By.xpath("//*[text() = '" + parts[i] + "']/parent::*")).click();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

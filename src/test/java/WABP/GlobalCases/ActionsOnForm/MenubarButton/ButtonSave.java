@@ -29,6 +29,7 @@ public class ButtonSave {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
         } catch (Exception e) {
             logger.error("Error while waiting opening confirmation window", e.getStackTrace());
+            throw e;
         }
     }
 

@@ -1,5 +1,6 @@
 package WABP.GlobalCases.ActionsOnForm.ExplicitWaits;
 
+import Logs.TakesScreenShots;
 import WABP.GlobalCases.Auth;
 import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +15,7 @@ import static SeleniumDriver.Driver.driver;
 
 public class ExpW_OpenComboBox {
     private static final Logger logger = LogManager.getLogger(ExpW_OpenComboBox.class);
+    TakesScreenShots takesScreenShots = new TakesScreenShots();
 
     @Description("Ждем когда отобразится введенное значение в списке (Появится атрибут focused), " +
             "Используется после senkeys в поле, чтобы корректно вставить значение")
@@ -23,6 +25,8 @@ public class ExpW_OpenComboBox {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-combo-box-item[@focused]")));
         } catch (Exception e){
             logger.error("Error while waiting list", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e);
+            throw e;
         }
         }
 
@@ -35,6 +39,8 @@ public class ExpW_OpenComboBox {
 
         } catch (Exception e) {
             logger.error("Error while waiting list after click", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e);
+            throw e;
         }
     }
 

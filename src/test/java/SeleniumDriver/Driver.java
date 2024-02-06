@@ -1,5 +1,6 @@
 package SeleniumDriver;
 
+import Logs.TakesScreenShots;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Driver {
     public static org.openqa.selenium.WebDriver driver;
     public static WebDriverWait wait;
+    static TakesScreenShots takesScreenShots = new TakesScreenShots();
 
     @BeforeClass
     public static void setUp() {
@@ -32,7 +34,7 @@ public class Driver {
         driver = new ChromeDriver(ops);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
 
@@ -43,7 +45,7 @@ public class Driver {
 
     @AfterMethod
     public static void DownMethod(){
-        driver.navigate().to("http://172.31.1.149/aispbpek/budget24/login");
+        driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
         var newWait = new WebDriverWait(driver, Duration.ofSeconds(30));
         newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout//vaadin-horizontal-layout/span[1]")));
     }

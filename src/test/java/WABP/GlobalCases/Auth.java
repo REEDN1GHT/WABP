@@ -1,5 +1,6 @@
 package WABP.GlobalCases;
 
+import Logs.TakesScreenShots;
 import SeleniumDriver.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,9 +24,11 @@ public class Auth extends Driver {
 
     String XpathWabpLogo = "//vaadin-app-layout//vaadin-horizontal-layout/span[1]";
 
+    TakesScreenShots takesScreenShots = new TakesScreenShots();
+
     public void AuthWABP() {
         if (!SearchWabpLogo(XpathWabpLogo)) {
-            driver.navigate().to("http://172.31.1.149/aispbpek/budget24/login");
+            driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException ex) {
@@ -40,10 +43,12 @@ public class Auth extends Driver {
 
     public void waitAuth() {
         try {
-            var newWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            var newWait = new WebDriverWait(driver, Duration.ofSeconds(1));
             newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout//vaadin-horizontal-layout/span[1]")));
         } catch (TimeoutException e) {
            logger.error("Wa not enough time for auth", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e);
+           throw e;
         }
     }
 

@@ -27,6 +27,7 @@ public class NovigateToFrorm {
             newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")));
         } catch (Exception e) {
             logger.error("Error while waiting opening forms", e.getStackTrace());
+            throw e;
         }
     }
 }
