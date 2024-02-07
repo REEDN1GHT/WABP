@@ -10,6 +10,7 @@ docker:
   image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome
   stage: docker
   script:
+    - chmod +x ./mvnw
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
 
 test:
