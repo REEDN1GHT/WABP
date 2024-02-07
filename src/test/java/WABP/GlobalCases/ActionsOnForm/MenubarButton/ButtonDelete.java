@@ -1,5 +1,6 @@
 package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
+import Logs.TakesScreenShots;
 import WABP.GlobalCases.NovigateToFrorm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +16,8 @@ import static SeleniumDriver.Driver.driver;
 
 public class ButtonDelete {
     private static final Logger logger = LogManager.getLogger(ButtonDelete.class);
+    TakesScreenShots takesScreenShots = new TakesScreenShots();
+
     public void ClickToDelete(){
         WebElement shadow = driver.findElement(By.xpath("//vaadin-vertical-layout[@class='TagPage tabsPage']/vaadin-horizontal-layout/vaadin-menu-bar"));
         SearchContext shadowRoot = shadow.getShadowRoot();
@@ -43,7 +46,8 @@ public class ButtonDelete {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Данные удалены']")));
         } catch (Exception e) {
-            logger.error("Error while waiting opening window success", e.getStackTrace());
+            logger.error("Error while waiting list after click", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e);
             throw e;
         }
     }

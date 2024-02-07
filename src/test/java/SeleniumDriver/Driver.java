@@ -40,12 +40,14 @@ public class Driver {
 
     @AfterClass
     public static void tearDown() {
+        takesScreenShots.TakesScreenshotsSuccess("tearDown", "Результат");
         driver.quit();
     }
 
     @AfterMethod
     public static void DownMethod(){
-        driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
+        takesScreenShots.TakesScreenshotsSuccess("DownMethod", "Результат");
+        driver.navigate().to("https://asbpek-test.aisa.ru/budget23/login");
         var newWait = new WebDriverWait(driver, Duration.ofSeconds(30));
         newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout//vaadin-horizontal-layout/span[1]")));
     }

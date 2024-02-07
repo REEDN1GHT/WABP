@@ -1,4 +1,4 @@
-image: maven:latest
+image: my-custom-chrome
 
 cache:
   paths:
@@ -8,6 +8,16 @@ cache:
 test:
   stage: test
   script:
-    - mvn io.qameta.allure:allure-maven:report
     - mvn clean test
+  only:
+    - triggers
 
+allure:
+  stage: allure-report
+  script:
+    - apt update && apt install -y allure
+    - mvn io.qameta.allure:allure-maven:report
+    - mvn io.qameta.allure:allure-maven:serve target/allure-results
+  artifacts:
+    paths:
+      - allure-report/

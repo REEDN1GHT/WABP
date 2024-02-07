@@ -28,7 +28,7 @@ public class Auth extends Driver {
 
     public void AuthWABP() {
         if (!SearchWabpLogo(XpathWabpLogo)) {
-            driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
+            driver.navigate().to("https://asbpek-test.aisa.ru/budget23/login");
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException ex) {

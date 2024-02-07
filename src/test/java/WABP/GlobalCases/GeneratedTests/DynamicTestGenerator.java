@@ -48,17 +48,17 @@ public class DynamicTestGenerator extends Driver {
     @Test(dataProvider = "menuData")
     public void DocMenuExists(String Path, String NameForm){
         MenuSearchForm MSF = new MenuSearchForm();
-        MSF.SearchForm(Path);
+        MSF.SearchForm(Path, NameForm);
         //WebElement Field = driver.findElement(By.xpath("//*[text() = '" + NameForm + "']"));
         takesScreenShots.TakesScreenshotsSuccess("Наличие_в_меню", NameForm);
-        Assert.assertNotNull(driver.findElement(By.xpath("//*[text() = '" + NameForm + "']")));
+        Assert.assertNotNull(driver.findElement(By.xpath("//span[text() = '" + NameForm + "']")));
     }
 
     @Test(dataProvider = "menuData")
     public void DocMenuOpen(String Path, String NameForm){
         MenuSearchForm MSF = new MenuSearchForm();
-        MSF.SearchFormContent(Path);
-        driver.findElement(By.xpath("//*[text() = '" + NameForm + "']")).click();
+        MSF.SearchForm(Path, NameForm);
+        driver.findElement(By.xpath("//span[text() = '" + NameForm + "']")).click();
         NTF.waitContentIntoInput();
         Assert.assertNotNull(driver.findElement(By
                 .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")), "Форма не открылась");

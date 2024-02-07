@@ -16,7 +16,7 @@ public class NovigateToFrorm {
 
 
     public void NovigateTo(String AppsID){
-        driver.navigate().to("http://172.31.1.149/aispbpek/budget24/lk/tabs?selectedTab="+AppsID);
+        driver.navigate().to("https://asbpek-test.aisa.ru/budget23/lk/tabs?selectedTab="+AppsID);
         waitContentIntoInput();
     }
 
