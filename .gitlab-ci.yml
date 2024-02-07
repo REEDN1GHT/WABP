@@ -9,20 +9,17 @@ stages:
   - "test"
   - "allure-report"
 
-variables:
-  # Установите переменную среды JAVA_HOME
-  JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
-
 test:
   stage: test
   script:
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - apt-get update && apt-get install -y maven
     - mvn clean test
-
 
 allure:
   stage: allure-report
   script:
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - apt-get update && apt-get install -y maven
     - apt update && apt install -y allure
     - mvn io.qameta.allure:allure-maven:report
