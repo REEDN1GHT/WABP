@@ -11,6 +11,8 @@ stages:
 
 test:
   stage: test
+  services:
+    - docker:dind
   script:
     - mvn clean test
   only:
@@ -25,3 +27,5 @@ allure:
   artifacts:
     paths:
       - allure-report/
+  only:
+    - triggers
