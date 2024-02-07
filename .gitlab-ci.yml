@@ -1,4 +1,4 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp
+image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp1
 cache:
   paths:
     - .m2/repository
