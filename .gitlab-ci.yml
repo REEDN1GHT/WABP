@@ -1,4 +1,4 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp2
+image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp1
 
 cache:
   paths:
@@ -8,7 +8,8 @@ cache:
 stages:
   - "test"
   - "allure-report"
-
+before_script:  
+  - export JAVA_HOME="/usr/lib/jvm/java-1.8.0_342-openjdk-amd64"
 test:
   stage: test
   script:
