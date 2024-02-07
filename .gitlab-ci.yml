@@ -1,6 +1,4 @@
 image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp1
-variables:
-  JAVA_HOME: /usr/local/openjdk-8
 
 cache:
   paths:
@@ -10,6 +8,10 @@ cache:
 stages:
   - "test"
   - "allure-report"
+
+variables:
+  # Установите переменную среды JAVA_HOME
+  JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
 
 test:
   stage: test
