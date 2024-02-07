@@ -4,6 +4,10 @@ cache:
   paths:
     - m2/repository/
     - target/
+stages:
+  - "test"
+  - "allure-report"
+
 
 test:
   stage: test
