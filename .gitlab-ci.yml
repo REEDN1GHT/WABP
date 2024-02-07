@@ -2,20 +2,15 @@ stages:
   - "test"
   - "allure-report"
   - "docker"
-
+cache:
+  paths:
+    - .m2/repository
+    - target/
 docker:
   image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome
   stage: docker
-cache:
-  cache:
-    paths:
-      - .m2/repository
-      - target/
-  services:
-    - name: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
-
 
 test:
   stage: test
