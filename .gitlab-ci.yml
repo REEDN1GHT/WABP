@@ -1,4 +1,7 @@
 image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp1
+variables:
+  JAVA_HOME: /usr/local/openjdk-8
+
 cache:
   paths:
     - .m2/repository
