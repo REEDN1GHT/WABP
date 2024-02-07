@@ -12,18 +12,16 @@ stages:
 test:
   stage: test
   script:
-    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - apt-get update && apt-get install -y maven
-    - mvn clean test
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 && mvn clean test
 
 allure:
   stage: allure-report
   script:
-    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-    - apt-get update && apt-get install -y maven
-    - apt update && apt install -y allure
-    - mvn io.qameta.allure:allure-maven:report
-    - mvn io.qameta.allure:allure-maven:serve target/allure-results
+    - apt-get update && apt-get install -y maven allure
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 && mvn io.qameta.allure:allure-maven:report
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 && mvn io.qameta.allure:allure-maven:serve target/allure-results
   artifacts:
     paths:
       - allure-report/
+
