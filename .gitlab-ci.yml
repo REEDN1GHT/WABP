@@ -1,14 +1,27 @@
+image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp
+cache:
+  paths:
+    - .m2/repository
+    - target/
+
 stages:
-  - test
-  - allure-report
+  - "test"
+  - "allure-report"
 
 test:
   stage: test
   script:
+    - apt-get update && apt-get install -y maven
     - mvn clean test
+
 
 allure:
   stage: allure-report
   script:
+    - apt-get update && apt-get install -y maven
+    - apt update && apt install -y allure
     - mvn io.qameta.allure:allure-maven:report
     - mvn io.qameta.allure:allure-maven:serve target/allure-results
+  artifacts:
+    paths:
+      - allure-report/
