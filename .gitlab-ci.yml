@@ -1,21 +1,24 @@
-stages:
-  - "test"
-  - "allure-report"
-  - "docker"
+
 cache:
   paths:
     - .m2/repository
     - target/
+
+stages:
+  - "test"
+  - "allure-report"
+  - "docker"
+
 docker:
   image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome
   stage: docker
   script:
-    - chmod +x ./mvnw
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
 
 test:
   stage: test
   script:
+    - chmod +x ./mvnw
     - mvn clean test
 
 
