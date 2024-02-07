@@ -1,4 +1,4 @@
-image: maven:latest
+image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome:latest
 cache:
   paths:
     - .m2/repository
