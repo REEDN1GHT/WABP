@@ -11,12 +11,14 @@ stages:
 test:
   stage: test
   script:
-    - mvn clean test
+   - apt-get update && apt-get install -y maven
+   - mvn clean test
 
 
 allure:
   stage: allure-report
   script:
+    - apt-get update && apt-get install -y maven
     - apt update && apt install -y allure
     - mvn io.qameta.allure:allure-maven:report
     - mvn io.qameta.allure:allure-maven:serve target/allure-results
