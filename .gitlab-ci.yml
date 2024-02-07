@@ -1,4 +1,4 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome:2
+image: selenium/standalone-chrome:latest
 cache:
   paths:
     - .m2/repository
