@@ -1,4 +1,4 @@
-image: selenium/standalone-chrome:latest
+image: maven:latest
 cache:
   paths:
     - .m2/repository
