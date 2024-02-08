@@ -5,6 +5,7 @@ import SeleniumDriver.Driver;
 import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_OpenComboBox;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
+import WABP.GlobalCases.ActionsOnForm.MenubarButton.ClickRightButton;
 import WABP.GlobalCases.Auth;
 import WABP.GlobalCases.NovigateToFrorm;
 import io.qameta.allure.Description;
@@ -23,15 +24,17 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class Сводные_поручения_с_уточнением_КБК_58Ю2 extends Driver {
-private WebDriver driver1;
+public static WebDriver driver1;
 
     WABP.GlobalCases.Auth Auth = new Auth();
     NovigateToFrorm NovToForm = new NovigateToFrorm();
     ExpW_OpenComboBox ExpOpen = new ExpW_OpenComboBox();
+
+    ClickRightButton clickRightButton = new ClickRightButton();
     TakesScreenShots TakeScreen = new TakesScreenShots();
     WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave ButtonSave = new ButtonSave();
     WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete ButtonDelete = new ButtonDelete();
-   // Page page = new Page(driver,wait);
+
 
 
      @FindBy(xpath ="//input[@id='input-vaadin-combo-box-60']")//Поле распорядитель
@@ -53,10 +56,10 @@ private WebDriver driver1;
     private WebElement table;
 
     @FindBy (xpath = "//vaadin-context-menu-item[contains(., 'Добавить')]")//Кнопка добавить строку
-    private WebElement addStrok;
+    private WebElement addTableString;
 
     @FindBy (xpath = "//vaadin-context-menu-item[contains(., 'Сохранить')]")//Кнопка сохранить строку
-    private WebElement saveStrok;
+    private WebElement saveTableString;
 
     @FindBy(xpath = "//*[@id='overlay']/div/div/vaadin-vertical-layout/vaadin-button")//Кнопка "Ок" (Данные формы успешно сохранены)
     private WebElement saveButtonOk;
@@ -95,30 +98,26 @@ private WebDriver driver1;
         assigment.sendKeys(Keys.ENTER);
 
         //-----------------------------
-        clickRightButton();
-        addStrok.click();
+        clickRightButton.clickRightButton(table);
+        addTableString.click();
 
         //-----------------------------
         numAssigment.sendKeys("7801042446/7801042446/11122");
         ExpOpen.waitFocusedElem();
         numAssigment.sendKeys(Keys.ENTER);
-        clickRightButton();
+        clickRightButton.clickRightButton(table);
 
-        saveStrok.click();
+        saveTableString.click();
 
         //-----------------------------
          ButtonSave.ClickToSave();
          TakeScreen.TakesScreenshotsSuccess("Save", "Сводные_поручения_с_уточнением_КБК");
          saveButtonOk.click();
 
-
-
     }
 
     @Test(dependsOnMethods = "SaveDoc")
     public void DeleteDoc() {
-        Auth.AuthWABP();
-        NovToForm.NovigateTo("51Ю2");
         Auth.AuthWABP();
         NovToForm.NovigateTo("58Ю2");
         initElement();
@@ -141,16 +140,13 @@ private WebDriver driver1;
         buttonYes.click();
         waitClicableElem();
         ButtonDelete.ClickToDelete();
+        TakeScreen.TakesScreenshotsSuccess("Delete", "Сводные_поручения_с_уточнением_КБК");
     }
 
-    public void clickRightButton()
-    {
-        Actions action = new Actions(driver1);
-        action.contextClick(table).perform();
-    }
+
     public void initElement()
     {
-        this.driver1 = driver;
+        driver1 = driver;
         PageFactory.initElements(driver1, this);
     }
 
