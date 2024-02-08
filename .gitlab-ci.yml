@@ -21,3 +21,4 @@ allure:
   artifacts:
     paths:
       - allure-report/
+  when: always
