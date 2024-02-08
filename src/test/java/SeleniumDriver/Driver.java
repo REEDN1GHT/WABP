@@ -24,7 +24,7 @@ public class Driver {
 
     @BeforeClass
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver");
         //WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
