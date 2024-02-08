@@ -1,5 +1,4 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/dockerwabp1
-
+image: maven:3.8-openjdk-11
 cache:
   paths:
     - .m2/repository
@@ -8,8 +7,7 @@ cache:
 stages:
   - "test"
   - "allure-report"
-before_script:  
-  - export JAVA_HOME="/usr/lib/jvm/java-1.8.0_342-openjdk-amd64"
+
 test:
   stage: test
   script:
