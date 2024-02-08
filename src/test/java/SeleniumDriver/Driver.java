@@ -22,18 +22,15 @@ public class Driver {
     public static WebDriverWait wait;
     static TakesScreenShots takesScreenShots = new TakesScreenShots();
 
-    static WebDriverManager wdm = WebDriverManager.chromedriver().browserInDocker()
-            .enableVnc().enableRecording();
-
     @BeforeClass
     public static void setUp() {
         //System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver");
-//        WebDriverManager.chromedriver().setup();
-        driver = wdm.create();
+        WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
         ops.addArguments("--remote-allow-origins=*");
         ops.setCapability("unexpectedAlertBehaviour", "dismiss");
         ops.addArguments("--disable-extensions");
+        ops.setBrowserVersion("121.0.6167.85");
         //ops.addArguments("headless");
         driver = new ChromeDriver(ops);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
