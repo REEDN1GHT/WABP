@@ -19,7 +19,7 @@ public class TXT_ParserConnectF {
 
 
     public JSONObject ParserConnectF(){
-        String filePath = "src/test/resources/connectF"+ConServer+ConYear+".txt";
+        String filePath = "src/test/resources/ConnectFUKT23.txt";
         JSONObject ConnectF = new JSONObject();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));

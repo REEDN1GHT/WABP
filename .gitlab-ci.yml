@@ -1,4 +1,4 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/my-custom-chrome
+image: maven:3.8-openjdk-11
 cache:
   paths:
     - .m2/repository
@@ -13,11 +13,9 @@ test:
   script:
     - mvn clean test
 
-
 allure:
   stage: allure-report
   script:
-    - apt update && apt install -y allure
     - mvn io.qameta.allure:allure-maven:report
     - mvn io.qameta.allure:allure-maven:serve target/allure-results
   artifacts:
