@@ -61,15 +61,17 @@ public static WebDriver driver1;
     @FindBy (xpath = "//vaadin-context-menu-item[contains(., 'Сохранить')]")//Кнопка сохранить строку
     private WebElement saveTableString;
 
-    @FindBy(xpath = "//*[@id='overlay']/div/div/vaadin-vertical-layout/vaadin-button")//Кнопка "Ок" (Данные формы успешно сохранены)
-    private WebElement saveButtonOk;
+    @FindBy(xpath = "//*[@id='overlay']/div/div/vaadin-vertical-layout/vaadin-button")//Кнопка "Ок" (Данные формы успешно сохранены/удалены)
+    private WebElement buttonOkSaveAndDelete;
+
+
     @FindBy (xpath = "//vaadin-combo-box[@jsonkey='Номер документа']/input")// Номер поручения. 2 строка, 1 графа
     private WebElement numAssigment;
 
 
     @Test
     @Description("Сохранение: Ввод сводных поручений с уточнением КБК")
-    public void SaveDoc() throws InterruptedException {
+    public void SaveDoc() {
         Auth.AuthWABP();
         NovToForm.NovigateTo("58Ю2");
         initElement();
@@ -112,7 +114,7 @@ public static WebDriver driver1;
         //-----------------------------
          ButtonSave.ClickToSave();
          TakeScreen.TakesScreenshotsSuccess("Save", "Сводные_поручения_с_уточнением_КБК");
-         saveButtonOk.click();
+         buttonOkSaveAndDelete.click();
 
     }
 

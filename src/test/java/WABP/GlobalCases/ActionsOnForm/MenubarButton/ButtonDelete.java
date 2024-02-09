@@ -2,6 +2,7 @@ package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
 import Logs.TakesScreenShots;
 import WABP.GlobalCases.NovigateToFrorm;
+import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static SeleniumDriver.Driver.driver;
+import static WABP.InputForm.TestCases.Сводные_поручения_с_уточнением_КБК_58Ю2.driver1;
 
 public class ButtonDelete {
     private static final Logger logger = LogManager.getLogger(ButtonDelete.class);
@@ -27,6 +29,7 @@ public class ButtonDelete {
 
         WaitModalDelete();
         driver.findElement(By.xpath("//vaadin-button[@buttonyes]")).click();
+
         WaitModalDeleteSuccessful();
 
     }
@@ -40,11 +43,13 @@ public class ButtonDelete {
             throw e;
         }
     }
+    @Description("Ожидаем пока окно с сообщением 'Загрузка данных' исчезнет и появится окно с сообщением 'Данные удалены'")
     public void WaitModalDeleteSuccessful(){
         try {
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Данные удалены']")));
+            WebElement element = driver.findElement(By.xpath("//*[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/div"));
+            WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(50));
+            wait1.until(ExpectedConditions.invisibilityOf(element));
         } catch (Exception e) {
             logger.error("Error while waiting list after click", e.getStackTrace());
             takesScreenShots.TakesScreenshotsErrors(e);
