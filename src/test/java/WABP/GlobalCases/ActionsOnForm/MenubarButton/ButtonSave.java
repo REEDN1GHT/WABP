@@ -29,8 +29,8 @@ public class ButtonSave {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
         } catch (Exception e) {
-            logger.error("Error while waiting list after click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            logger.error("Error while waiting after click", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e, "Save:Error while waiting after click");
             throw e;
         }
     }

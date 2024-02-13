@@ -28,7 +28,7 @@ public class Auth extends Driver {
 
     public void AuthWABP() {
         if (!SearchWabpLogo(XpathWabpLogo)) {
-            driver.navigate().to("https://asbpek-test.aisa.ru/budget23/login");
+            driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException ex) {
@@ -47,7 +47,7 @@ public class Auth extends Driver {
             newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout//vaadin-horizontal-layout/span[1]")));
         } catch (TimeoutException e) {
            logger.error("Wa not enough time for auth", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            takesScreenShots.TakesScreenshotsErrors(e, "Авторизация");
            throw e;
         }
     }

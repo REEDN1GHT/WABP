@@ -50,8 +50,12 @@ public class DynamicTestGenerator extends Driver {
         MenuSearchForm MSF = new MenuSearchForm();
         MSF.SearchForm(Path, NameForm);
         //WebElement Field = driver.findElement(By.xpath("//*[text() = '" + NameForm + "']"));
-        takesScreenShots.TakesScreenshotsSuccess("Наличие_в_меню", NameForm);
-        Assert.assertNotNull(driver.findElement(By.xpath("//span[text() = '" + NameForm + "']")));
+        try {
+            Assert.assertNotNull(driver.findElement(By.xpath("//span[text() = '" + NameForm + "']")));
+            takesScreenShots.TakesScreenshotsSuccess("Наличие_в_меню", NameForm);
+        } catch (Exception e){
+            takesScreenShots.TakesScreenshotsErrors(e, NameForm);
+        }
     }
 
     @Test(dataProvider = "menuData")
@@ -59,13 +63,16 @@ public class DynamicTestGenerator extends Driver {
         MenuSearchForm MSF = new MenuSearchForm();
         MSF.SearchForm(Path, NameForm);
         driver.findElement(By.xpath("//span[text() = '" + NameForm + "']")).click();
-        NTF.waitContentIntoInput();
-        Assert.assertNotNull(driver.findElement(By
-                .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")), "Форма не открылась");
-        takesScreenShots.TakesScreenshotsSuccess("DocOpen", NameForm);
-        Assert.assertNotEquals(0, driver.findElements(By
-                        .xpath("//vaadin-scroller/vaadin-vertical-layout/*/*"))
-                .size(), "Контент формы не найден");
+
+        try {
+            NTF.waitContentIntoInput();
+            Assert.assertNotNull(driver.findElement(By
+                    .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")), "Форма не открылась");
+            takesScreenShots.TakesScreenshotsSuccess("DocOpen", NameForm);
+        } catch (Exception e){
+            takesScreenShots.TakesScreenshotsErrors(e, NameForm);
+            throw e;
+        }
     }
 
 

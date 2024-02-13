@@ -1,5 +1,6 @@
 package WABP.GlobalCases;
 
+import Logs.TakesScreenShots;
 import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,7 @@ import static SeleniumDriver.Driver.driver;
 
 public class NovigateToFrorm {
     private static final Logger logger = LogManager.getLogger(NovigateToFrorm.class);
+    TakesScreenShots takesScreenShots = new TakesScreenShots();
 
 
     public void NovigateTo(String AppsID){

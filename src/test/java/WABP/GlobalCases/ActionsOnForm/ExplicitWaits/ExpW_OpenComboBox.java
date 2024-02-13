@@ -25,7 +25,7 @@ public class ExpW_OpenComboBox {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-combo-box-item[@focused]")));
         } catch (Exception e){
             logger.error("Error while waiting list", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            takesScreenShots.TakesScreenshotsErrors(e, "Error while waiting list");
             throw e;
         }
         }
@@ -39,7 +39,7 @@ public class ExpW_OpenComboBox {
 
         } catch (Exception e) {
             logger.error("Error while waiting list after click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            takesScreenShots.TakesScreenshotsErrors(e, "Error while waiting list after click");
             throw e;
         }
     }

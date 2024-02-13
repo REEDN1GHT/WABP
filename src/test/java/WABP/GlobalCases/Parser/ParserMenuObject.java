@@ -63,7 +63,7 @@ public class ParserMenuObject extends ConnectBD {
                     "                    supertip VarChar(255),onAction VarChar(255), TypeOfObject VarChar(255),\n" +
                     "                    Apps_Objects VarChar(255), Apps_ObjectsID_PARENT VarChar(255), MenuNumberUnique VarChar(255), CountInt VarChar(10))\n" +
                     "INsert Into #MENU (Apps_MenuID,MenuNumber,MenuText,ObjectType,ObjectName,OpenMode,OpenArgs,WindowCaption,[label],imageMso,ButtonSize, keytip,screentip,supertip,onAction, TypeOfObject, Apps_Objects, Apps_ObjectsID_PARENT, MenuNumberUnique)\n" +
-                    "    Execute dbo.Apps_Menu_Load @ApplicationType='budget23', @Application=Null, @VersionNumber=33.9, @Mode='Data'\n" +
+                    "    Execute dbo.Apps_Menu_Load @ApplicationType='budget24', @Application=Null, @VersionNumber=33.9, @Mode='Data'\n" +
                     "Select R.MenuNumber,\n" +
                     "       R.MenuNumberUnique,\n" +
                     "       Case When P_1.MenuText Is Not Null Then P_1.MenuText Else '' End +\n" +

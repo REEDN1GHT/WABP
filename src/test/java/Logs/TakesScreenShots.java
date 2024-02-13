@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TakesScreenShots extends Driver {
-    @Attachment(value = "Page screenshot", type = "image/png")
+
     public void TakesScreenshotsSuccess(String TestName, String Form) {
         var sourceFile = ((TakesScreenshot) Driver.driver).getScreenshotAs(OutputType.FILE);
         byte[] AllureScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
@@ -40,14 +40,16 @@ public class TakesScreenShots extends Driver {
         Allure.addAttachment(TestName + " " + Form + " " + timestamp, new ByteArrayInputStream(AllureScreenshot));
     }
 
-    public void TakesScreenshotsErrors(Throwable throwable){
+    public void TakesScreenshotsErrors(Throwable throwable, String Form){
         var sourceFile = ((TakesScreenshot) Driver.driver).getScreenshotAs(OutputType.FILE);
         byte[] AllureScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         String projectPath = System.getProperty("user.dir");
-        String Path = "\\Screenshots\\Errors";
-        new File(projectPath + Path).mkdirs();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat dateFormatFolder = new SimpleDateFormat("dd-MM-yyyy");
+        String timestampFolder = dateFormatFolder.format(new Date());
         String timestamp = dateFormat.format(new Date());
+        String Path = "\\Screenshots\\Errors"+timestampFolder+"\\"+Form;
+        new File(projectPath + Path).mkdirs();
         String fileName = projectPath + Path + "\\" + ClassNameError(throwable) + " " + timestamp + ".png";
         File File = new File(fileName);
         try {
@@ -55,7 +57,7 @@ public class TakesScreenShots extends Driver {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Allure.addAttachment("Error" + ClassNameError(throwable) + " " + timestamp, new ByteArrayInputStream(AllureScreenshot));
+        Allure.addAttachment("Error " + ClassNameError(throwable) + " " + timestamp, new ByteArrayInputStream(AllureScreenshot));
     }
 
     public String ClassNameError(Throwable throwable) {
@@ -68,12 +70,6 @@ public class TakesScreenShots extends Driver {
             }
         }
         return className;
-    }
-    @Test
-    public void test(){
-        Auth auth = new Auth();
-        auth.AuthWABP();
-        TakesScreenshotsSuccess("TESTTTT", "KERTTT");
     }
 }
 

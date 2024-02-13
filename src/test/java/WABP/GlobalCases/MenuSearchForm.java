@@ -48,7 +48,7 @@ public class MenuSearchForm extends Driver {
             }
         } catch (Exception e){
             logger.error("Error while Search/opening form", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            takesScreenShots.TakesScreenshotsErrors(e, "Error while Search/opening form");
             throw e;
         }
     }

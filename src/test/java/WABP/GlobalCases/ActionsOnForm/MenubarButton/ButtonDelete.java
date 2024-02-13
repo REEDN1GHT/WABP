@@ -46,8 +46,8 @@ public class ButtonDelete {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Данные удалены']")));
         } catch (Exception e) {
-            logger.error("Error while waiting list after click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e);
+            logger.error("Error while waitingafter click", e.getStackTrace());
+            takesScreenShots.TakesScreenshotsErrors(e, "Delete:Error while waiting after click");
             throw e;
         }
     }
