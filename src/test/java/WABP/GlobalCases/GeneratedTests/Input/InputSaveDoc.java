@@ -1,0 +1,43 @@
+package WABP.GlobalCases.GeneratedTests.Input;
+
+import Logs.TakesScreenShots;
+import SeleniumDriver.Driver;
+import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
+import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
+import WABP.GlobalCases.Auth;
+import WABP.GlobalCases.GeneratedTests.Input.DataProvider.DataProviderForInput;
+import WABP.GlobalCases.ActionsOnForm.DynamicStepsGenerator.DynamicSteps;
+import WABP.GlobalCases.NovigateToFrorm;
+import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
+import io.qameta.allure.Allure;
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+
+public class InputSaveDoc extends Driver {
+    JSON_ColumnParser jsonColumnParser = new JSON_ColumnParser();
+    Auth auth = new Auth();
+    NovigateToFrorm novigateToFrorm = new NovigateToFrorm();
+    DynamicSteps steps = new DynamicSteps();
+    ButtonSave buttonSave = new ButtonSave();
+    ButtonDelete buttonDelete = new ButtonDelete();
+    TakesScreenShots takesScreenShots = new TakesScreenShots();
+
+
+
+    @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
+    public void SaveDoc(String MenuNumber, String FormName, String FileName){
+        System.out.println(MenuNumber+ " xxxxxxx " + FileName);
+        //FileName = "Ввод лицевых счетов.json";
+        Allure.description("Сохранение формы " + FormName);
+        auth.AuthWABP();
+        novigateToFrorm.NovigateTo(MenuNumber);
+        steps.StepsToSave(MenuNumber, FileName);
+        buttonSave.ClickToSave();
+        takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
+        driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
+        buttonDelete.ClickToDelete();
+        takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+
+    }
+
+}

@@ -71,6 +71,7 @@ public class ParserMenuObject extends ConnectBD {
                     "       Case When P_3.MenuText Is Not Null Then '/' + P_3.MenuText Else '' End +\n" +
                     "       Case When P_4.MenuText Is Not Null Then '/' + P_4.MenuText Else '' End +\n" +
                     "       Case When P_5.MenuText Is Not Null Then '/' + P_5.MenuText Else '' End As Path,\n" +
+                    "       R.ObjectName as FileName,\n" +
                     "       R.MenuText As NameForm,\n" +
                     "       R.TypeOfObject As Type\n" +
                     "from #MENU As R Left join #MENU As P_1 on (Left(R.MenuNumber,1)=P_1.MenuNumber And P_1.TypeOfObject='Folder')\n" +
@@ -94,6 +95,7 @@ public class ParserMenuObject extends ConnectBD {
                 valueMap.put("Number", resultSet.getString("MenuNumber"));
                 valueMap.put("AppsID", resultSet.getString("MenuNumberUnique"));
                 valueMap.put("Path", resultSet.getString("Path"));
+                valueMap.put("FileName", resultSet.getString("FileName"));
                 valueMap.put("NameForm", resultSet.getString("NameForm"));
                 valueMap.put("Type", resultSet.getString("Type"));
 

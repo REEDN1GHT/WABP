@@ -1,0 +1,18 @@
+{
+  "FormField": {
+    "Месяц": "Январь"
+  },
+  "Tables": {
+    "Tables1": {
+      "Rows": {
+        "Row1": {
+          "Дата": "01.01.2024"
+        }
+      }
+    }
+  },
+  "ApproveData": {
+    "DateORG": "",
+    "DateGRBS": ""
+  }
+}

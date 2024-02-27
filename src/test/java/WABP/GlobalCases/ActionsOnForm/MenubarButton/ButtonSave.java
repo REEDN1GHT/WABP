@@ -18,7 +18,7 @@ public class ButtonSave {
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
     public void ClickToSave(){
-        WebElement shadow = driver.findElement(By.xpath("//vaadin-vertical-layout[@class='TagPage tabsPage']/vaadin-horizontal-layout/vaadin-menu-bar"));
+        WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
         SearchContext shadowRoot = shadow.getShadowRoot();
         shadowRoot.findElement(By.cssSelector("div > vaadin-menu-bar-button:nth-child(3)")).click();
         WaitModalSave();
