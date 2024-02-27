@@ -1,7 +1,6 @@
 package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
 import Logs.TakesScreenShots;
-import WABP.GlobalCases.NovigateToFrorm;
 import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,14 +13,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static SeleniumDriver.Driver.driver;
-import static WABP.InputForm.TestCases.Сводные_поручения_с_уточнением_КБК_58Ю2.driver1;
 
 public class ButtonDelete {
     private static final Logger logger = LogManager.getLogger(ButtonDelete.class);
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
     public void ClickToDelete(){
-        WebElement shadow = driver.findElement(By.xpath("//vaadin-vertical-layout[@class='TagPage tabsPage']/vaadin-horizontal-layout/vaadin-menu-bar"));
+        WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
         SearchContext shadowRoot = shadow.getShadowRoot();
 
         WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));

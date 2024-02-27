@@ -2,9 +2,10 @@
 <suite name="TestSuite">
     <test name="Test">
         <classes>
-            <class name="WABP.GlobalCases.GeneratedTests.DynamicTestGenerator"/>
-            <class name="WABP.InputForm.TestCases.Поручения_на_оплату_расходов_51Ю2"/>
-            <class name="WABP.InputForm.TestCases.Сводные_поручения_с_уточнением_КБК_58Ю2"/>
+<!--            <class name="WABP.GlobalCases.GeneratedTests.DynamicTestGenerator"/>-->
+<!--            <class name="WABP.InputForm.TestCases.Поручения_на_оплату_расходов_51Ю2"/>-->
+<!--            <class name="WABP.InputForm.TestCases.Сводные_поручения_с_уточнением_КБК_58Ю2"/>-->
+            <class name="WABP.GlobalCases.GeneratedTests.Input.InputSaveDoc"/>
         </classes>
     </test>
 </suite>
