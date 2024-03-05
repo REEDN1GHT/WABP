@@ -67,7 +67,7 @@ public class JSON_ColumnParser {
                                 if (propertiesObject.has("ControlType")) {
                                     int controlType = propertiesObject.getInt("ControlType");
                                     // Проверка на нужные типы контроллеров
-                                    if (controlType == 111 || controlType == 109 || controlType == 112) {
+                                    if (controlType == 111 || controlType == 109 || controlType == 112 || controlType == 106) {
                                         // Получение нужных данных
                                         HashMap properties = new HashMap();
                                         properties.put("Name", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Name"));
@@ -96,7 +96,7 @@ public class JSON_ColumnParser {
                                                         JSONObject addPropertiesObject = AddFieldsObject.getJSONObject("Properties");
                                                         if (addPropertiesObject.getBoolean("Visible")) {
                                                             int AddcontrolType = addPropertiesObject.getInt("ControlType");
-                                                            if (AddcontrolType == 111 || AddcontrolType == 109 || AddcontrolType == 112) {
+                                                            if (AddcontrolType == 111 || AddcontrolType == 109 || AddcontrolType == 112 || AddcontrolType == 106) {
                                                                 HashMap addproperties = new HashMap();
                                                                 addproperties.put("Name", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Name"));
                                                                 addproperties.put("ControlType", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getInt("ControlType"));

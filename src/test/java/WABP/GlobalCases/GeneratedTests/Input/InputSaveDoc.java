@@ -4,6 +4,7 @@ import Logs.TakesScreenShots;
 import SeleniumDriver.Driver;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
+import WABP.GlobalCases.ActionsOnForm.MenubarButton.TypeAction;
 import WABP.GlobalCases.Auth;
 import WABP.GlobalCases.GeneratedTests.Input.DataProvider.DataProviderForInput;
 import WABP.GlobalCases.ActionsOnForm.DynamicStepsGenerator.DynamicSteps;
@@ -21,22 +22,28 @@ public class InputSaveDoc extends Driver {
     ButtonSave buttonSave = new ButtonSave();
     ButtonDelete buttonDelete = new ButtonDelete();
     TakesScreenShots takesScreenShots = new TakesScreenShots();
+    TypeAction typeAction = new TypeAction();
+
 
 
 
     @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
-    public void SaveDoc(String MenuNumber, String FormName, String FileName){
+    public void inputDoc(String MenuNumber, String FormName, String FileName){
         System.out.println(MenuNumber+ " xxxxxxx " + FileName);
         //FileName = "Ввод лицевых счетов.json";
         Allure.description("Сохранение формы " + FormName);
         auth.AuthWABP();
         novigateToFrorm.NovigateTo(MenuNumber);
         steps.StepsToSave(MenuNumber, FileName);
-        buttonSave.ClickToSave();
-        takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
-        driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
-        buttonDelete.ClickToDelete();
-        takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+        if (typeAction.actionSave()){
+            buttonSave.ClickToSave();
+            takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
+            driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
+        }
+        if (typeAction.actionDelete()) {
+            buttonDelete.ClickToDelete();
+            takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+        }
 
     }
 

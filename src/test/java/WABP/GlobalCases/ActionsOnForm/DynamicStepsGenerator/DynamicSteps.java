@@ -8,6 +8,8 @@ import WABP.GlobalCases.Parser.JSON_DataParser;
 import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
 import WABP.GlobalCases.Parser.TabContent.TagMap;
 import io.qameta.allure.Description;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,10 +30,11 @@ public class DynamicSteps extends Driver {
     ExpW_OpenComboBox ExpListOpen = new ExpW_OpenComboBox();
     ExpW_WaitDocOpen ExpDocOpen = new ExpW_WaitDocOpen();
     ButtonYesWhenOpen buttonYesWhenOpen = new ButtonYesWhenOpen();
+    DynamicStepsInGrid dynamicStepsInGrid = new DynamicStepsInGrid();
 
-
+    private static final Logger logger = LogManager.getLogger(DynamicSteps.class);
     private JSONObject FieldWithProperties = new JSONObject();
-    private JSONObject FieldData = new JSONObject();
+    public JSONObject FieldData = new JSONObject();
     private int MaxIndex = 0;
 
     public void StepsToSave(String MenuNumber, String FileName){
@@ -44,24 +47,19 @@ public class DynamicSteps extends Driver {
         if (Modal != null) {
             Modal.click();
         }
-        if (!ContainsSub()) {
-            List<WebElement> elements = driver.findElements(By.xpath("//vaadin-combo-box[@disabled]/input"));
-            if (!elements.isEmpty()) {
-                ExpDocOpen.waitForModalLoadingDataToDisappear();
-            }
-        }
-        SetDataIntoLine("Header", FormName, ValidateBodyField(FormName));
+        ExpDocOpen.waitForModalLoadingDataToDisappear();
+        SetDataIntoLine("Body", FormName, ValidateBodyField(FormName));
     }
 
-    public void StepsToDelete(String MenuNumber, String FileName){
-        String FormName = FileName.replaceAll(".json", "");
-        FieldWithProperties = jsonColumnParser.FormFieldProperties(jsonColumnParser.GenerateJSON(FileName));
-        FieldData = jsonDataParser.ReadJSON(MenuNumber);
-
-        SetDataIntoLine("Header", FormName, ValidateHeaderField(FormName));
-        driver.findElement(By.xpath("//vaadin-button[contains(., 'Да')]")).click();
-
-    }
+//    public void StepsToDelete(String MenuNumber, String FileName){
+//        String FormName = FileName.replaceAll(".json", "");
+//        FieldWithProperties = jsonColumnParser.FormFieldProperties(jsonColumnParser.GenerateJSON(FileName));
+//        FieldData = jsonDataParser.ReadJSON(MenuNumber);
+//
+//        SetDataIntoLine("Header", FormName, ValidateHeaderField(FormName));
+//        driver.findElement(By.xpath("//vaadin-button[contains(., 'Да')]")).click();
+//
+//    }
 
     private void SetDataIntoLine(String TypeData, String FormName,  HashMap<String, Integer> LineMap){
         boolean LimitToList;
@@ -75,6 +73,11 @@ public class DynamicSteps extends Driver {
             if (Field != null){
                 if (FieldData.getJSONObject("FormField").has(Field)){
                     SetField(FieldWithProperties.getJSONObject(FormName).getJSONObject(Field).getInt("ControlType"), LimitToList ,Field);
+                }
+                if (Field.matches("Документ.*") && ContainsSub(Field)){
+                    if (FieldData.getJSONObject("Tables").has(Field)){
+                        dynamicStepsInGrid.setDataOnRow(Field, dynamicStepsInGrid.subFormName(Field), FieldData);
+                    }
                 }
             }
         }
@@ -155,7 +158,6 @@ public class DynamicSteps extends Driver {
             ExpListOpen.waitFocusedElem();
         }
         element.sendKeys(Keys.ENTER);
-
     }
 
     @Description("Поиск ключа в мапе по TabIndex")
@@ -168,8 +170,13 @@ public class DynamicSteps extends Driver {
         return null;
     }
 
-    public boolean ContainsSub(){
-        List<WebElement> elements = driver.findElements(By.xpath("//input-form-component-div[@jsontype='acSubForm']"));
-        return !elements.isEmpty();
+    private boolean ContainsSub(String jsonKeyTable){
+        try {
+            driver.findElement(By.xpath(globalXpath.gSubForm(jsonKeyTable)));
+            return true;
+        } catch (JSONException e){
+            logger.trace("cannot find SubForm");
+            return false;
+        }
     }
 }

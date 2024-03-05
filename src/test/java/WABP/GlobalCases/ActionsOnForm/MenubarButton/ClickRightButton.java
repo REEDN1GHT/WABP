@@ -10,7 +10,7 @@ import static WABP.InputForm.TestCases.Сводные_поручения_с_ут
 public class ClickRightButton extends Driver{
     public void clickRightButton(WebElement element)
     {
-        Actions action = new Actions(driverToInit);
+        Actions action = new Actions(driver);
         action.contextClick(element).perform();
     }
     public void initElement()

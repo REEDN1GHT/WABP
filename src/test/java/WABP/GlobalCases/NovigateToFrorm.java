@@ -26,7 +26,7 @@ public class NovigateToFrorm {
     public void waitContentIntoInput() {
         try {
             var newWait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")));
+            newWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/vaadin-vertical-layout")));
         } catch (Exception e) {
             logger.error("Error while waiting opening forms", e.getStackTrace());
             throw e;
