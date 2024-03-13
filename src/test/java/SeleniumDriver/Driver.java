@@ -23,13 +23,15 @@ public class Driver {
     public static void setUp() {
         //System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver");
         System.out.println("google chrome init");
+        WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
-
-        ops.setHeadless(true);
-        ops.addArguments("--disable-dev-shm-usage");
+//        ops.setHeadless(true);
+//        ops.addArguments("--disable-dev-shm-usage");
+        ops.addArguments("--remote-allow-origins=*");
+        ops.setCapability("unexpectedAlertBehaviour", "dismiss");
+        ops.addArguments("--disable-extensions");
         ops.addArguments("--no-sandbox");
         ops.addArguments("start-maximized");
-
 //        ops.addArguments("--remote-allow-origins=*");
 //        ops.setCapability("unexpectedAlertBehaviour", "dismiss");
 //        ops.addArguments("--disable-extensions");
@@ -38,12 +40,27 @@ public class Driver {
 //        ops.addArguments("--ignore-certificate-errors");
 //        ops.setBrowserVersion("121.0.6167.85");
 //        ops.setHeadless(true);
-        WebDriverManager.chromedriver().setup();
+
         driver = new ChromeDriver(ops);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
+
+//    @BeforeClass
+//    public static void setUp() {
+//        //System.setProperty("webdriver.chrome.driver", "src/test/java/SeleniumDriver/chromedriver");
+//        WebDriverManager.chromedriver().clearDriverCache().setup();
+//        ChromeOptions ops = new ChromeOptions();
+//        ops.addArguments("--remote-allow-origins=*");
+//        ops.setCapability("unexpectedAlertBehaviour", "dismiss");
+//        ops.addArguments("--disable-extensions");
+//        driver = new ChromeDriver(ops);
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+//    }
+
 
     @AfterClass
     public static void tearDown() {
