@@ -46,22 +46,6 @@ public class InputSaveDoc extends Driver {
             buttonDelete.ClickToDelete();
             takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
         }
-
-    }
-
-    @Test
-    public void test(){
-        auth.AuthWABP();
-        driver.navigate().to("http://10.13.2.112:8080/lk/tabs?selectedTab=DBЮ3Y");
-        System.out.println(("eadadae"));
-        System.out.println(("eadadae"));
-        WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
-        SearchContext shadowRoot = shadow.getShadowRoot();
-        shadowRoot.findElement(By.cssSelector("vaadin-menu-bar-button[part='menu-bar-button'] span[menutext='Сохранить']")).click();
-        System.out.println(("eadadae"));
-        System.out.println(("eadadae"));
-        System.out.println(("eadadae"));
-        System.out.println(("eadadae"));
     }
 
 }
