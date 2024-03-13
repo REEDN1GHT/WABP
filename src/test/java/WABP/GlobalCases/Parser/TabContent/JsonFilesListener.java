@@ -1,7 +1,7 @@
 package WABP.GlobalCases.Parser.TabContent;
 
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@Slf4j
+
 public class JsonFilesListener {
 
     public List<String> listJsonFormFiles() {
