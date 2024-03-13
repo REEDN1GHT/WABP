@@ -1,20 +1,25 @@
 package WABP.GlobalCases.ActionsOnForm.MenubarButton;
 
 import WABP.GlobalCases.ActionsOnForm.DynamicStepsGenerator.DynamicSteps;
+import WABP.GlobalCases.Parser.JSON_DataParser;
+import org.json.JSONObject;
 
 public class TypeAction {
-    DynamicSteps dynamicSteps = new DynamicSteps();
+    JSON_DataParser jsonDataParser = new JSON_DataParser();
 
-    public boolean actionSave(){
-        if (dynamicSteps.FieldData.getJSONObject("Actions").has("Save")){
-            return dynamicSteps.FieldData.getJSONObject("Actions").getBoolean("Save");
+
+    public boolean actionSave(String MenuNumber){
+        JSONObject FieldData = jsonDataParser.ReadJSON(MenuNumber);
+        if (FieldData.getJSONObject("Actions").has("Save")){
+            return FieldData.getJSONObject("Actions").getBoolean("Save");
         } else {
             return false;
         }
     }
-    public boolean actionDelete(){
-        if (dynamicSteps.FieldData.getJSONObject("Actions").has("Delete")){
-            return dynamicSteps.FieldData.getJSONObject("Actions").getBoolean("Delete");
+    public boolean actionDelete(String MenuNumber){
+        JSONObject FieldData = jsonDataParser.ReadJSON(MenuNumber);
+        if (FieldData.getJSONObject("Actions").has("Delete")){
+            return FieldData.getJSONObject("Actions").getBoolean("Delete");
         } else {
             return false;
         }

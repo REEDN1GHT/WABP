@@ -17,10 +17,11 @@ public class ButtonSave {
     private static final Logger logger = LogManager.getLogger(ButtonSave.class);
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
+    //TODO Переработать кнопку сохранения/удаления после отмашки Манзара
     public void ClickToSave(){
         WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
         SearchContext shadowRoot = shadow.getShadowRoot();
-        shadowRoot.findElement(By.cssSelector("div > vaadin-menu-bar-button:nth-child(3)")).click();
+        shadowRoot.findElement(By.cssSelector("[button_name='Сохранить']")).click();
         WaitModalSave();
     }
 
@@ -30,7 +31,7 @@ public class ButtonSave {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
         } catch (Exception e) {
             logger.error("Error while waiting after click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e, "Save:Error while waiting after click");
+            takesScreenShots.TakesScreenshotsErrors(e, "Save_Error while waiting after click");
             throw e;
         }
     }

@@ -12,6 +12,8 @@ import WABP.GlobalCases.NovigateToFrorm;
 import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class InputSaveDoc extends Driver {
@@ -35,16 +37,31 @@ public class InputSaveDoc extends Driver {
         auth.AuthWABP();
         novigateToFrorm.NovigateTo(MenuNumber);
         steps.StepsToSave(MenuNumber, FileName);
-        if (typeAction.actionSave()){
+        if (typeAction.actionSave(MenuNumber)){
             buttonSave.ClickToSave();
             takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
             driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
         }
-        if (typeAction.actionDelete()) {
+        if (typeAction.actionDelete(MenuNumber)) {
             buttonDelete.ClickToDelete();
             takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
         }
 
+    }
+
+    @Test
+    public void test(){
+        auth.AuthWABP();
+        driver.navigate().to("http://10.13.2.112:8080/lk/tabs?selectedTab=DBЮ3Y");
+        System.out.println(("eadadae"));
+        System.out.println(("eadadae"));
+        WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
+        SearchContext shadowRoot = shadow.getShadowRoot();
+        shadowRoot.findElement(By.cssSelector("vaadin-menu-bar-button[part='menu-bar-button'] span[menutext='Сохранить']")).click();
+        System.out.println(("eadadae"));
+        System.out.println(("eadadae"));
+        System.out.println(("eadadae"));
+        System.out.println(("eadadae"));
     }
 
 }

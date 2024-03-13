@@ -4,6 +4,7 @@ import SeleniumDriver.Driver;
 import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_OpenComboBox;
 import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_WaitDocOpen;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonYesWhenOpen;
+import WABP.GlobalCases.ActionsOnForm.MenubarButton.TableContextMenu;
 import WABP.GlobalCases.Parser.JSON_DataParser;
 import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
 import WABP.GlobalCases.Parser.TabContent.TagMap;
@@ -15,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class DynamicSteps extends Driver {
     ExpW_WaitDocOpen ExpDocOpen = new ExpW_WaitDocOpen();
     ButtonYesWhenOpen buttonYesWhenOpen = new ButtonYesWhenOpen();
     DynamicStepsInGrid dynamicStepsInGrid = new DynamicStepsInGrid();
+    TableContextMenu tableContextMenu = new TableContextMenu();
 
     private static final Logger logger = LogManager.getLogger(DynamicSteps.class);
     private JSONObject FieldWithProperties = new JSONObject();
@@ -48,6 +51,7 @@ public class DynamicSteps extends Driver {
             Modal.click();
         }
         ExpDocOpen.waitForModalLoadingDataToDisappear();
+        createTabsOnDOM();
         SetDataIntoLine("Body", FormName, ValidateBodyField(FormName));
     }
 
@@ -76,11 +80,36 @@ public class DynamicSteps extends Driver {
                 }
                 if (Field.matches("Документ.*") && ContainsSub(Field)){
                     if (FieldData.getJSONObject("Tables").has(Field)){
+                        tableContextMenu.clickToOpenTab(validateTabs(Field, "subForm"));
+                        ExpDocOpen.waitTabVisabilityOf(driver.findElement(By.xpath(globalXpath.gSubForm(Field))));
                         dynamicStepsInGrid.setDataOnRow(Field, dynamicStepsInGrid.subFormName(Field), FieldData);
                     }
                 }
             }
         }
+    }
+    //todo: может потребоваться обернуть в try catch, если табы будут залочены
+    private void createTabsOnDOM(){
+        List<WebElement> tabs = driver.findElements(By.xpath("//vaadin-tabs[@jsontype='acTabCtl']/vaadin-tab[@class='tab']"));
+        if (tabs.size()>0){
+            for (WebElement element : tabs){
+                element.click();
+            }
+        }
+    }
+
+    private String validateTabs(String field, String type){
+        if (type.equals("subForm")){
+            try{
+                if (FieldData.getJSONObject("Tables").has(field)){
+                    return driver.findElement(By.xpath("//div[input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+ field +"']][@jsontype='acPage']")).getAttribute("jsonkey");
+                }
+            } catch (NoSuchElementException e) {
+                logger.trace("cannot find tab" + e.getStackTrace());
+                return null;
+            }
+        }
+        return null;
     }
 
     private HashMap<String, Integer> ValidateHeaderField(String FormName){
@@ -148,6 +177,7 @@ public class DynamicSteps extends Driver {
     @Description("Заполнение полей данными в форме")
     private void SetField(int TypeForm, boolean LimitToList, String Field){
         WebElement element = driver.findElement(By.xpath(globalXpath.gInput(Field)));
+        tableContextMenu.scrollIntoView(element);
         element.clear();
         element.click();
         if (TypeForm == 111){
@@ -174,7 +204,7 @@ public class DynamicSteps extends Driver {
         try {
             driver.findElement(By.xpath(globalXpath.gSubForm(jsonKeyTable)));
             return true;
-        } catch (JSONException e){
+        } catch (NoSuchElementException e){
             logger.trace("cannot find SubForm");
             return false;
         }

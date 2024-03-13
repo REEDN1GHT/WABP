@@ -5,8 +5,6 @@ import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_OpenComboBox;
 import WABP.GlobalCases.ActionsOnForm.ExplicitWaits.ExpW_WaitDocOpen;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ClickRightButton;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.TableContextMenu;
-import WABP.GlobalCases.Auth;
-import WABP.GlobalCases.NovigateToFrorm;
 import WABP.GlobalCases.Parser.JSON_DataParser;
 import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
 import WABP.GlobalCases.Parser.TabContent.TagMap;
@@ -16,11 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.testng.annotations.Test;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +25,8 @@ public class DynamicStepsInGrid extends Driver {
     GlobalXpath globalXpath = new GlobalXpath();
     TagMap tagMap = new TagMap();
     ExpW_OpenComboBox ExpListOpen = new ExpW_OpenComboBox();
-    ExpW_WaitDocOpen ExpDocOpen = new ExpW_WaitDocOpen();
+    ExpW_WaitDocOpen expDocOpen = new ExpW_WaitDocOpen();
+    ExpW_OpenComboBox expWOpenComboBox = new ExpW_OpenComboBox();
     ClickRightButton clickRightButton = new ClickRightButton();
     TableContextMenu tableContextMenu = new TableContextMenu();
     private static final Logger logger = LogManager.getLogger(DynamicStepsInGrid.class);
@@ -39,6 +34,7 @@ public class DynamicStepsInGrid extends Driver {
     private JSONObject SubFieldData = new JSONObject();
     private int MaxIndex = 0;
 
+    @Description("Определяем наименование JSON файла с параметрами полей")
     public String subFormName(String FieldSub){
         try {
             FieldSub = driver.findElement(By.xpath(globalXpath.gSubForm(FieldSub))).getAttribute("objectname");
@@ -46,59 +42,84 @@ public class DynamicStepsInGrid extends Driver {
             FieldSub = null;
             logger.error("Cannot find SubForm on Tab", e);
         }
+        assert FieldSub != null;
         return FieldSub.trim();
     }
 
+    @Description("Парсим JSON десктоп АИС БП подформы")
     public JSONObject parseSubProperty(String FileSub) {
         return jsonColumnParser.FormFieldProperties(jsonColumnParser.GenerateJSON(FileSub +".json"));
     }
 
+    @Description("Ищет ячейку строки в гриде по уникальному значению")
+    /*
+    Реворк в связи с изменением гридов по https://tc.aisa.ru/browse/WABP-2325
+    */
     private WebElement searchFieldInRow(String uniqueDataInField, String jsonKeyTable){
-        String slot = driver.findElement(By.xpath("//vaadin-grid-cell-content//*[contains(text(), '"+uniqueDataInField+"')]/../..")).getAttribute("slot");
+//        String slot = driver.findElement(By.xpath("//vaadin-grid-cell-content//*[contains(text(), '"+uniqueDataInField+"')]/../..")).getAttribute("slot");
+//        WebElement shadow = driver.findElement(By.xpath("//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']/vaadin-grid"));
+//        SearchContext shadowRoot = shadow.getShadowRoot();
+//        return shadowRoot
+//                .findElement(By.cssSelector("[name='"+slot+"']"))
+//                .findElement(By.xpath("../.."));
+        return driver.findElement(By.xpath("//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']/vaadin-grid/vaadin-grid-cell-content//*[contains(text(), '"+uniqueDataInField+"')]/../.."));
+    }
+    @Description("Ищем последнюю строку в гриде которую надо кликнуть, для создания новой/сохранении предыдущей")
+    private WebElement searchRowToCreate(String jsonKeyTable){
         WebElement shadow = driver.findElement(By.xpath("//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']/vaadin-grid"));
         SearchContext shadowRoot = shadow.getShadowRoot();
-        return shadowRoot
-                .findElement(By.cssSelector("[name='"+slot+"']"))
-                .findElement(By.xpath("../.."));
+        String slot = shadowRoot
+                .findElement(By.cssSelector("tr[last]:not([hidden])"))
+                .findElement(By.cssSelector("td[first-column] > slot"))
+                .getAttribute("name");
+        return driver.findElement(By.xpath("//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']/vaadin-grid/vaadin-grid-cell-content[@slot='"+slot+"']"));
     }
 
-    public Boolean validateCompletedRowExists(String uniqueDataInField, String jsonKeyTable){
+    @Description("Валидация наличия заполненной строки в vaadin-grid")
+    private Boolean validateCompletedRowExists(String uniqueDataInField, String jsonKeyTable){
         try {
             searchFieldInRow(uniqueDataInField, jsonKeyTable);
             return true;
-        } catch (NullPointerException e) {
+        } catch (NoSuchElementException e) {
             logger.trace("the completed line is missing" + e);
+            return false;
+        }
+    }
+    @Description("Валидация наличия строк в vaadin-grid")
+    private Boolean validateRowExists(String jsonKeyTable){
+        try {
+            searchRowToCreate( jsonKeyTable);
+            return true;
+        } catch (NoSuchElementException e) {
+            logger.trace("the line is missing" + e);
             return false;
         }
     }
 
     //todo обработать условие когда есть строка в форме но нет в ней значений как в уточнении кбк
-    @Description("Определение строки в которую будут вставляться данные")
+    @Description("Основной метод генерации строки, ее заполнения")
     public void setDataOnRow(String jsonKeyTable, String formName, JSONObject FieldData){
             SubFieldWithProperties = parseSubProperty(formName);
             SubFieldData = FieldData;
             JSONArray arrayRows = SubFieldData.getJSONObject("Tables").getJSONObject(jsonKeyTable).getJSONObject("Rows").names();
             for (int i = 1; i<=arrayRows.length(); i++){
-                String uniqueData = SubFieldData.getJSONObject("Tables").getJSONObject(jsonKeyTable).getJSONObject("Rows").getJSONObject(String.valueOf(i)).getString("Значение для поиска строки");
-                if (validateCompletedRowExists(uniqueData, jsonKeyTable)) {
-                    tableContextMenu.clickToEdit(searchFieldInRow(uniqueData, jsonKeyTable));
-//                    clickRightButton.clickRightButton(searchFieldInRow(uniqueData, jsonKeyTable));
-//                    tableContextMenu.clickEdit();
-                    SetDataIntoLine("SubForm", formName, validateSubBodyField(formName), String.valueOf(i), jsonKeyTable);
-//                    clickRightButton.clickRightButton(searchFieldInRow(uniqueData, jsonKeyTable));
-                } else {
-                    clickRightButton.clickRightButton(driver.findElement(By.xpath(globalXpath.gSubFormGrid(jsonKeyTable))));
-                    tableContextMenu.clickAddNewRow();
-                    SetDataIntoLine("SubForm", formName, validateSubBodyField(formName), String.valueOf(i), jsonKeyTable);
-                    clickRightButton.clickRightButton(driver.findElement(By.xpath(globalXpath.gSubFormGrid(jsonKeyTable))));
+                String uniqueData = null;
+                if (SubFieldData.getJSONObject("Tables").getJSONObject(jsonKeyTable).getJSONObject("Rows").getJSONObject(String.valueOf(i)).has("Значение для поиска строки")){
+                    uniqueData = SubFieldData.getJSONObject("Tables").getJSONObject(jsonKeyTable).getJSONObject("Rows").getJSONObject(String.valueOf(i)).getString("Значение для поиска строки");
                 }
-                //todo 1. После раскрытия строки мы не можем повторно искать по тексту так как span пропадает
-                //todo 2. Мы не можем кликнуть в строку или в ячейку, так как элементы друг друга перекрывают
-                //todo 3. Рассмотреть вариант установки значений не используя scroller в shadowroot
-                tableContextMenu.clickToSaveRow(searchFieldInRow(uniqueData, jsonKeyTable));
+                if (uniqueData != null && validateCompletedRowExists(uniqueData, jsonKeyTable)) {
+                    tableContextMenu.clickToEdit(searchFieldInRow(uniqueData, jsonKeyTable));
+                    SetDataIntoLine("SubForm", formName, validateSubBodyField(formName), String.valueOf(i), jsonKeyTable);
+                } else {
+                    if (!validateRowExists(jsonKeyTable)){
+                        tableContextMenu.clickToCreateRowInGrid(jsonKeyTable);
+                    }
+                    tableContextMenu.clickToEdit(searchRowToCreate(jsonKeyTable));
+                    SetDataIntoLine("SubForm", formName, validateSubBodyField(formName), String.valueOf(i), jsonKeyTable);
+                }
             }
     }
-
+    @Description("Определение, параметра поля и валидация поля между Json'нами")
     private void SetDataIntoLine(String TypeData,
                                  String FormName,
                                  HashMap<String, Integer> LineMap,
@@ -119,6 +140,7 @@ public class DynamicStepsInGrid extends Driver {
             }
         }
     }
+    @Description("Валидация поля на пред возможности его заполнения")
     private HashMap<String, Integer> validateSubBodyField(String FormName){
         HashMap<String, Integer> Line = new HashMap<>();
         JSONArray ListFields = SubFieldWithProperties.getJSONObject(FormName).names();
@@ -143,19 +165,23 @@ public class DynamicStepsInGrid extends Driver {
     private void setDataInFieldOnRow(int TypeForm,
                                      boolean LimitToList,
                                      String Field,
-                                     String NumberRow,
+                                     String numberRow,
                                      String jsonKeyTable){
-        WebElement element = driver.findElement(By.xpath(globalXpath.gInput(Field)));
+        //expDocOpen.waitClicableElem(globalXpath.gGridInput(jsonKeyTable, Field));
+        expWOpenComboBox.Sleep(500);
+        WebElement element = driver.findElement(By.xpath(globalXpath.gGridInput(jsonKeyTable, Field)));
         if (TypeForm == 106) {
             //todo Обработать клик в чекбокс с проверкой состояния true/false на морде и датасете
             element.click();
         } else {
             element.clear();
+            //expWOpenComboBox.Sleep(200);
             element.click();
+            //expWOpenComboBox.Sleep(200);
             if (TypeForm == 111){
                 ExpListOpen.waitList();
             }
-            element.sendKeys(SubFieldData.getJSONObject("Tables").getString(Field));
+            element.sendKeys(SubFieldData.getJSONObject("Tables").getJSONObject(jsonKeyTable).getJSONObject("Rows").getJSONObject(numberRow).getString(Field));
             if (TypeForm == 111 && LimitToList){
                 ExpListOpen.waitFocusedElem();
             }
@@ -170,29 +196,5 @@ public class DynamicStepsInGrid extends Driver {
             }
         }
         return null;
-    }
-
-
-
-
-
-
-
-
-
-    Auth auth = new Auth();
-    NovigateToFrorm novigateToFrorm = new NovigateToFrorm();
-
-    @Test
-    public void test(){
-        String menuNumber = "DKЮН";
-        SubFieldData = jsonDataParser.ReadJSON(menuNumber);
-        auth.AuthWABP();
-        novigateToFrorm.NovigateTo(menuNumber);
-
-        System.out.println("12311");
-        System.out.println("12311");
-        System.out.println("12311");
-        System.out.println("12311");
     }
 }

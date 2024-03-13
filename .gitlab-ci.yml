@@ -1,7 +1,5 @@
-image: maven:3.8-openjdk-11
-default:
-  tags:
-    - "shellocal"
+image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/wabp_selenium_chrome:01
+
 cache:
   paths:
     - .m2/repository
@@ -10,6 +8,11 @@ cache:
 stages:
   - "test"
   - "allure-report"
+
+before_script:
+  - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+  - apt-get update
+  - apt-get install -y maven
 
 test:
   stage: test
@@ -20,8 +23,7 @@ allure:
   stage: allure-report
   script:
     - mvn io.qameta.allure:allure-maven:report
-    - mvn io.qameta.allure:allure-maven:serve target/allure-results
   artifacts:
+    when: always
     paths:
-      - allure-report/
-  when: always
+      - /builds/maksim.riabtsev/wabp_test/target/site/allure-maven-plugin

@@ -23,7 +23,7 @@ public class ButtonDelete {
         SearchContext shadowRoot = shadow.getShadowRoot();
 
         WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(shadowRoot.findElement(By.cssSelector("div > vaadin-menu-bar-button:nth-child(2)")))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(shadowRoot.findElement(By.cssSelector("[button_name='Удалить']")))).click();
 
         WaitModalDelete();
         driver.findElement(By.xpath("//vaadin-button[@buttonyes]")).click();
@@ -50,7 +50,7 @@ public class ButtonDelete {
             wait1.until(ExpectedConditions.invisibilityOf(element));
         } catch (Exception e) {
             logger.error("Error while waitingafter click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e, "Delete:Error while waiting after click");
+            takesScreenShots.TakesScreenshotsErrors(e, "Delete_Error while waiting after click");
             throw e;
         }
     }
