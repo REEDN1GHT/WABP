@@ -28,9 +28,9 @@ public class TakesScreenShots extends Driver {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         String timestampFolder = dateFormatFolder.format(new Date());
         String timestamp = dateFormat.format(new Date());
-        String Path = "\\Screenshots\\"+timestampFolder+"\\"+Form;
+        String Path = "/Screenshots/"+timestampFolder+"/"+Form;
         new File(projectPath + Path).mkdirs();
-        String fileName = projectPath + Path + "\\" + timestamp + " " + TestName +".png";
+        String fileName = projectPath + Path + "/" + timestamp + " " + TestName +".png";
         File File1 = new File(fileName);
         try {
             FileUtils.copyFile(sourceFile, File1);
@@ -48,9 +48,9 @@ public class TakesScreenShots extends Driver {
         SimpleDateFormat dateFormatFolder = new SimpleDateFormat("dd-MM-yyyy");
         String timestampFolder = dateFormatFolder.format(new Date());
         String timestamp = dateFormat.format(new Date());
-        String Path = "\\Screenshots\\Errors"+timestampFolder+"\\"+Form;
+        String Path = "/Screenshots/Errors"+timestampFolder+"/"+Form;
         new File(projectPath + Path).mkdirs();
-        String fileName = projectPath + Path + "\\" + ClassNameError(throwable) + " " + timestamp + ".png";
+        String fileName = projectPath + Path + "/" + ClassNameError(throwable) + " " + timestamp + ".png";
         File File = new File(fileName);
         try {
             FileUtils.copyFile(sourceFile, File);

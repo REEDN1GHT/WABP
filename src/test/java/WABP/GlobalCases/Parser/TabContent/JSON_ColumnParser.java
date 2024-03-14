@@ -20,7 +20,7 @@ public class JSON_ColumnParser {
     }
 
     public JSONObject GenerateJSON(String FileName){
-        String filePath = "desktop-raw-files-master\\json\\inputs\\"+FileName;
+        String filePath = "desktop-raw-files-master/json/inputs/"+FileName;
         JSONTokener tokener = null;
         try {
             tokener = new JSONTokener(new FileReader(filePath));
