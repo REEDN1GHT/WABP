@@ -17,7 +17,7 @@ public class ButtonSave {
     private static final Logger logger = LogManager.getLogger(ButtonSave.class);
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
-    //TODO Переработать кнопку сохранения/удаления после отмашки Манзара
+
     public void ClickToSave(){
         WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
         SearchContext shadowRoot = shadow.getShadowRoot();

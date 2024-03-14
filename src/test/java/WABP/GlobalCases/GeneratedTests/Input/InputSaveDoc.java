@@ -14,6 +14,7 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InputSaveDoc extends Driver {
@@ -28,7 +29,10 @@ public class InputSaveDoc extends Driver {
 
 
 
-
+    /*TODO: в строке buttonSave.ClickToSave();
+        Обрарботать исключения, когда форма не сохраняется с модалкой
+       "При сохранении документа произошла неизвестная ошибка. Код: 187b5e12-5e17-4b82-ab83-5b89852e7f1f"
+       ожидаемый результат теста: Fail*/
 //    @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
 //    public void inputDoc(String MenuNumber, String FormName, String FileName){
 //        System.out.println(MenuNumber+ " xxxxxxx " + FileName);

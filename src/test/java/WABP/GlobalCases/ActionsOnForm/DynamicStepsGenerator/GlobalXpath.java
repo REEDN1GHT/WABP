@@ -6,9 +6,9 @@ public class GlobalXpath {
         jsonKey = "//*[@jsonkey='"+jsonKey+"']/input";
         return jsonKey;
     }
-    public String gGridInput(String jsonKeyTable, String jsonKey){
-        jsonKey = "//input-form-component-div[@jsonkey='"+ jsonKeyTable +"']//*[@jsonkey='"+jsonKey+"']/input";
-        return jsonKey;
+    public String gGridInput(String jsonKeyTable, String fieldkey){
+        fieldkey = "//input-form-component-div[@jsonkey='"+ jsonKeyTable +"']//*[@fieldkey='"+ fieldkey +"']/input";
+        return fieldkey;
     }
 
     public String gSubForm(String jsonKey){
