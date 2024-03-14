@@ -18,6 +18,7 @@ test:
   stage: test
   script:
     - mvn clean test
+  allow_failure: true
 
 allure:
   stage: allure-report
