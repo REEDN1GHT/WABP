@@ -33,7 +33,7 @@ public class JsonFilesListener {
     }
 
     public List<String> listJsonDataFiles() {
-        String directoryPath = "src/test\\java/WABP\\JsonData\\Input";
+        String directoryPath = "src/test/java/WABP/JsonData/Input";
         List<String> DataFormMenuNumber = new ArrayList<>();
         File directory = new File(directoryPath);
         try {
