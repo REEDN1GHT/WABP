@@ -25,7 +25,7 @@ public class Driver {
         System.out.println("google chrome init");
         WebDriverManager.chromedriver().setup();
         ChromeOptions ops = new ChromeOptions();
-        ops.setHeadless(true);
+        //ops.setHeadless(true);
 //        ops.addArguments("--disable-dev-shm-usage");
         ops.addArguments("--remote-allow-origins=*");
         ops.setCapability("unexpectedAlertBehaviour", "dismiss");

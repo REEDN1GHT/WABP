@@ -33,31 +33,31 @@ public class InputSaveDoc extends Driver {
         Обрарботать исключения, когда форма не сохраняется с модалкой
        "При сохранении документа произошла неизвестная ошибка. Код: 187b5e12-5e17-4b82-ab83-5b89852e7f1f"
        ожидаемый результат теста: Fail*/
-    @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
-    public void inputDoc(String MenuNumber, String FormName, String FileName){
-        System.out.println(MenuNumber+ " xxxxxxx " + FileName);
-        //FileName = "Ввод лицевых счетов.json";
-        Allure.description("Сохранение формы " + FormName);
-        auth.AuthWABP();
-        novigateToFrorm.NovigateTo(MenuNumber);
-        steps.StepsToSave(MenuNumber, FileName);
-        if (typeAction.actionSave(MenuNumber)){
-            buttonSave.ClickToSave();
-            takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
-            driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
-        }
-        if (typeAction.actionDelete(MenuNumber)) {
-            buttonDelete.ClickToDelete();
-            takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
-        }
-    }
-
-//    @Test
-//    public void test(){
-//        System.out.println("start test google");
-//        driver.navigate().to("https://www.google.com");
-//        System.out.println(driver.findElement(By.xpath("//img[@alt='Google']")).getAttribute("alt"));
+//    @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
+//    public void inputDoc(String MenuNumber, String FormName, String FileName){
+//        System.out.println(MenuNumber+ " xxxxxxx " + FileName);
+//        //FileName = "Ввод лицевых счетов.json";
+//        Allure.description("Сохранение формы " + FormName);
+//        auth.AuthWABP();
+//        novigateToFrorm.NovigateTo(MenuNumber);
+//        steps.StepsToSave(MenuNumber, FileName);
+//        if (typeAction.actionSave(MenuNumber)){
+//            buttonSave.ClickToSave();
+//            takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
+//            driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
+//        }
+//        if (typeAction.actionDelete(MenuNumber)) {
+//            buttonDelete.ClickToDelete();
+//            takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+//        }
 //    }
+
+    @Test
+    public void test(){
+        System.out.println("start test google");
+        driver.navigate().to("https://www.google.com");
+        System.out.println(driver.findElement(By.xpath("//img[@alt='Google']")).getAttribute("alt"));
+    }
 
 
 }
