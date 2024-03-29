@@ -1,30 +1,30 @@
-image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/wabp_selenium_chrome:01
+# image: registry.webdevsrv.office.aisa.ru/maksim.riabtsev/wabp_test/wabp_selenium_chrome:01
 
-cache:
-  paths:
-    - .m2/repository
-    - target/
+# cache:
+#   paths:
+#     - .m2/repository
+#     - target/
 
-stages:
-  - "test"
-  - "allure-report"
+# stages:
+#   - "test"
+#   - "allure-report"
 
-before_script:
-  - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-  - apt-get update
-  - apt-get install -y maven
+# before_script:
+#   - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+#   - apt-get update
+#   - apt-get install -y maven
 
-test:
-  stage: test
-  script:
-    - mvn clean test
-  allow_failure: true
+# test:
+#   stage: test
+#   script:
+#     - mvn clean test
+#   allow_failure: true
 
-allure:
-  stage: allure-report
-  script:
-    - mvn io.qameta.allure:allure-maven:report
-  artifacts:
-    when: always
-    paths:
-      - /builds/maksim.riabtsev/wabp_test/target/site/allure-maven-plugin
+# allure:
+#   stage: allure-report
+#   script:
+#     - mvn io.qameta.allure:allure-maven:report
+#   artifacts:
+#     when: always
+#     paths:
+#       - /builds/maksim.riabtsev/wabp_test/target/site/allure-maven-plugin
