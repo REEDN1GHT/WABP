@@ -21,14 +21,18 @@ public class Auth extends Driver {
     private By ByLogin = By.xpath("//input[@name='username']");
     private By ByPassword = By.xpath("//input[@name='password']");
     private By ByConfirmButton = By.xpath("//vaadin-button[@role='button']");
+    private By ByConfirmGroupButton = By.xpath("//vaadin-vertical-layout/vaadin-button[@role='button']");
 
     String XpathWabpLogo = "//vaadin-app-layout//vaadin-horizontal-layout/span[1]";
 
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
+    /*TODO Заменить ВСЕ ссылки, логопасы на переменные из конфига, enum или что-то подобного
+    *  Изменить во всех местах на переменные
+    */
     public void AuthWABP() {
         if (!SearchWabpLogo(XpathWabpLogo)) {
-            driver.navigate().to("https://asbpek-test.aisa.ru/budget24/login");
+            driver.navigate().to("http://172.31.1.149/aispbpek/budget24-newdb/login");
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException ex) {
@@ -37,17 +41,19 @@ public class Auth extends Driver {
             driver.findElement(ByLogin).sendKeys("UKT_Riabtsev");
             driver.findElement(ByPassword).sendKeys("UKT_Riabtsev1");
             driver.findElement(ByConfirmButton).click();
+            driver.findElement(ByConfirmGroupButton).click();
+            waitAndClickGroupSelection();
             waitAuth();
         }
     }
 
     public void waitAuth() {
         try {
-            WebElement element = driver.findElement(By.xpath("//*[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/div"));
+            WebElement element = driver.findElement(By.xpath("//*[@class='main-page__container']"));
             WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(50));
-            wait1.until(ExpectedConditions.invisibilityOf(element));
+            wait1.until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException e) {
-           logger.error("Wa not enough time for auth", e.getStackTrace());
+           logger.error("Wait not enough time for auth", e.getStackTrace());
             takesScreenShots.TakesScreenshotsErrors(e, "Авторизация");
            throw e;
         }
@@ -67,4 +73,10 @@ public class Auth extends Driver {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         }
     }
+
+    public void waitAndClickGroupSelection() {
+        var newWait = new WebDriverWait(driver,Duration.ofSeconds(50));
+        newWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//vaadin-button[text()='Выбрать группу']"))).click();
+    }
+
 }

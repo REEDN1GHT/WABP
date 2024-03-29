@@ -2,6 +2,7 @@ package WABP.GlobalCases.GeneratedTests.Input;
 
 import Logs.TakesScreenShots;
 import SeleniumDriver.Driver;
+import WABP.GlobalCases.ActionsOnForm.DynamicStepsGenerator.DynamicStepsInCustomForm;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonDelete;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.ButtonSave;
 import WABP.GlobalCases.ActionsOnForm.MenubarButton.TypeAction;
@@ -10,6 +11,7 @@ import WABP.GlobalCases.GeneratedTests.Input.DataProvider.DataProviderForInput;
 import WABP.GlobalCases.ActionsOnForm.DynamicStepsGenerator.DynamicSteps;
 import WABP.GlobalCases.NovigateToFrorm;
 import WABP.GlobalCases.Parser.TabContent.JSON_ColumnParser;
+import WABP.UserSettings.ChangeUserGroup;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
@@ -26,7 +28,8 @@ public class InputSaveDoc extends Driver {
     ButtonDelete buttonDelete = new ButtonDelete();
     TakesScreenShots takesScreenShots = new TakesScreenShots();
     TypeAction typeAction = new TypeAction();
-
+    DynamicStepsInCustomForm dynamicStepsInCustomForm = new DynamicStepsInCustomForm();
+    ChangeUserGroup changeUserGroup = new ChangeUserGroup();
 
 
     /*TODO: в строке buttonSave.ClickToSave();
@@ -34,21 +37,26 @@ public class InputSaveDoc extends Driver {
        "При сохранении документа произошла неизвестная ошибка. Код: 187b5e12-5e17-4b82-ab83-5b89852e7f1f"
        ожидаемый результат теста: Fail*/
     @Test(dataProviderClass = DataProviderForInput.class, dataProvider = "FormDataExists")
-    public void inputDoc(String MenuNumber, String FormName, String FileName){
-        System.out.println(MenuNumber+ " xxxxxxx " + FileName);
+    public void inputDoc(String MenuNumber, String FormName, String FileName) {
+        System.out.println(MenuNumber + " xxxxxxx " + FileName);
         //FileName = "Ввод лицевых счетов.json";
         Allure.description("Сохранение формы " + FormName);
         auth.AuthWABP();
+        changeUserGroup.changeGroupForDoc(MenuNumber);
         novigateToFrorm.NovigateTo(MenuNumber);
-        steps.StepsToSave(MenuNumber, FileName);
-        if (typeAction.actionSave(MenuNumber)){
-            buttonSave.ClickToSave();
-            takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
-            driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
-        }
-        if (typeAction.actionDelete(MenuNumber)) {
-            buttonDelete.ClickToDelete();
-            takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+        if (!dynamicStepsInCustomForm.validateTypeForm(MenuNumber)) {
+            steps.StepsToSave(MenuNumber, FileName);
+            if (typeAction.actionSave(MenuNumber)) {
+                buttonSave.ClickToSave();
+                takesScreenShots.TakesScreenshotsSuccess("Сохранение", FormName);
+                driver.findElement(By.xpath("//vaadin-button[text()='ОК']")).click();
+            }
+            if (typeAction.actionDelete(MenuNumber)) {
+                buttonDelete.ClickToDelete();
+                takesScreenShots.TakesScreenshotsSuccess("Удаление", FormName);
+            }
+        } else {
+            dynamicStepsInCustomForm.setDataToModal();
         }
     }
 
@@ -58,6 +66,17 @@ public class InputSaveDoc extends Driver {
 //        driver.navigate().to("https://www.google.com");
 //        System.out.println(driver.findElement(By.xpath("//img[@alt='Google']")).getAttribute("alt"));
 //    }
+    @Test
+    public void test1(){
+        auth.AuthWABP();
+        novigateToFrorm.NovigateTo("DBЮ3A");
+        System.out.println("DBЮ3A");
+        System.out.println("DBЮ3A");
+        System.out.println("DBЮ3A");
+        System.out.println("DBЮ3A");
+        System.out.println("DBЮ3A");
+        System.out.println("DBЮ3A");
+    }
 
 
 }

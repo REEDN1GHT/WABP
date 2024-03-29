@@ -37,7 +37,7 @@ public class DataProviderForInput {
             data[i][2] = fileName;
             System.out.println("DataForDataDriver" + listDataForForms.get(i) + " " + formName + " " + fileName);
         }
-        System.out.println("DataForDataDriver" + listDataForForms.size() + " ssss " + menuData.length());
+        System.out.println("DataForDataDriver: listDataForForms " + listDataForForms.size() + " menuData " + menuData.length());
 
         return data;
     }

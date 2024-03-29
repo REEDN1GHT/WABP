@@ -32,6 +32,16 @@ public class ButtonDelete {
 
     }
 
+    public void ClickToDeleteInVaadinDialog(){
+        WebElement shadow = driver.findElement(By.xpath("//vaadin-dialog-overlay//vaadin-menu-bar[@role='menubar']"));
+        SearchContext shadowRoot = shadow.getShadowRoot();
+        shadowRoot.findElement(By.cssSelector("[button_name='Удалить']")).click();
+        WaitModalDelete();
+        driver.findElement(By.xpath("//vaadin-button[@buttonyes]")).click();
+
+        WaitModalDeleteSuccessful();
+    }
+
     public void WaitModalDelete(){
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));

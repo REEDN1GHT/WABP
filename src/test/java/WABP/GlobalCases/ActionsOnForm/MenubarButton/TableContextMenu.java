@@ -4,7 +4,6 @@ import SeleniumDriver.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -45,6 +44,9 @@ public class TableContextMenu extends Driver {
 
     public void clickToCreateRowInGrid(String jsonKeyTable){
         driver.findElement(By.xpath("//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']")).click();
+    }
+    public void dialogClickToCreateRowInGrid(String jsonKeyTable){
+        driver.findElement(By.xpath("//vaadin-dialog-overlay//input-form-component-div[@jsontype='acSubForm' and @jsonkey='"+jsonKeyTable+"']")).click();
     }
 
     public void clickToSaveRow(WebElement element){
