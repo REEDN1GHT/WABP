@@ -13,33 +13,26 @@ import java.time.Duration;
 
 import static SeleniumDriver.Driver.driver;
 
-public class ButtonSave {
-    private static final Logger logger = LogManager.getLogger(ButtonSave.class);
+public class ButtonAdd {
+    private static final Logger logger = LogManager.getLogger(ButtonAdd.class);
     TakesScreenShots takesScreenShots = new TakesScreenShots();
 
 
-    public void ClickToSave(){
+    public void ClickToAdd(){
         WebElement shadow = driver.findElement(By.xpath("//vaadin-menu-bar[@class='tabs-page__buttons-bar']"));
         SearchContext shadowRoot = shadow.getShadowRoot();
-        shadowRoot.findElement(By.cssSelector("[button_name='Сохранить']")).click();
-        WaitModalSave();
-    }
-    public void ClickToSaveInVaadinDialog(){
-        WebElement shadow = driver.findElement(By.xpath("//vaadin-dialog-overlay//vaadin-menu-bar[@role='menubar']"));
-        SearchContext shadowRoot = shadow.getShadowRoot();
-        shadowRoot.findElement(By.cssSelector("[button_name='Сохранить']")).click();
-        WaitModalSave();
+        shadowRoot.findElement(By.cssSelector("[button_name='Добавить']")).click();
+        WaitModalAdd();
     }
 
-    public void WaitModalSave(){
+    public void WaitModalAdd(){
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//vaadin-dialog-overlay[@id='overlay']/flow-component-renderer/div/vaadin-vertical-layout/span")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='overlay']")));
         } catch (Exception e) {
             logger.error("Error while waiting after click", e.getStackTrace());
-            takesScreenShots.TakesScreenshotsErrors(e, "Save_Error while waiting after click");
+            takesScreenShots.TakesScreenshotsErrors(e, "ButtonAdd_Error while waiting after click");
             throw e;
         }
     }
-
 }

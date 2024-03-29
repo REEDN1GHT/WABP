@@ -20,7 +20,7 @@ public class JSON_ColumnParser {
     }
 
     public JSONObject GenerateJSON(String FileName){
-        String filePath = "desktop-raw-files-master\\json\\inputs\\"+FileName;
+        String filePath = "desktop-raw-files-master/json/inputs/"+FileName;
         JSONTokener tokener = null;
         try {
             tokener = new JSONTokener(new FileReader(filePath));
@@ -67,7 +67,7 @@ public class JSON_ColumnParser {
                                 if (propertiesObject.has("ControlType")) {
                                     int controlType = propertiesObject.getInt("ControlType");
                                     // Проверка на нужные типы контроллеров
-                                    if (controlType == 111 || controlType == 109 || controlType == 112) {
+                                    if (controlType == 111 || controlType == 109 || controlType == 112 || controlType == 106 || controlType == 104) {
                                         // Получение нужных данных
                                         HashMap properties = new HashMap();
                                         properties.put("Name", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Name"));
@@ -76,7 +76,9 @@ public class JSON_ColumnParser {
                                         properties.put("TabStop", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("TabStop"));
                                         properties.put("Tag", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Tag"));
                                         properties.put("Enabled", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Enabled"));
-                                        properties.put("Locked", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Locked"));
+                                        if (propertiesObject.has("Locked")){
+                                            properties.put("Locked", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Locked"));
+                                        }
                                         properties.put("Visible", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Visible"));
                                         if (propertiesObject.has("LimitToList")){
                                             properties.put("LimitToList", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("LimitToList"));
@@ -96,7 +98,7 @@ public class JSON_ColumnParser {
                                                         JSONObject addPropertiesObject = AddFieldsObject.getJSONObject("Properties");
                                                         if (addPropertiesObject.getBoolean("Visible")) {
                                                             int AddcontrolType = addPropertiesObject.getInt("ControlType");
-                                                            if (AddcontrolType == 111 || AddcontrolType == 109 || AddcontrolType == 112) {
+                                                            if (AddcontrolType == 111 || AddcontrolType == 109 || AddcontrolType == 112 || AddcontrolType == 106 || AddcontrolType == 104) {
                                                                 HashMap addproperties = new HashMap();
                                                                 addproperties.put("Name", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Name"));
                                                                 addproperties.put("ControlType", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getInt("ControlType"));
@@ -104,7 +106,10 @@ public class JSON_ColumnParser {
                                                                 addproperties.put("TabStop", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("TabStop"));
                                                                 addproperties.put("Tag", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Tag"));
                                                                 addproperties.put("Enabled", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Enabled"));
-                                                                addproperties.put("Locked", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Locked"));
+                                                                if (propertiesObject.has("Locked")){
+                                                                    addproperties.put("Locked", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Properties").getString("Locked"));
+
+                                                                }
                                                                 addproperties.put("Visible", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("Visible"));
                                                                 if (addPropertiesObject.has("LimitToList")){
                                                                     addproperties.put("LimitToList", json.getJSONObject(FormName).getJSONObject("Controls").getJSONObject(fieldName).getJSONObject("Controls").getJSONObject(AddTab.toString()).getJSONObject("Controls").getJSONObject(AddField.toString()).getJSONObject("Properties").getString("LimitToList"));

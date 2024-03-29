@@ -17,7 +17,7 @@ public class JSON_DataParser {
 
     public JSONObject ReadJSON(String MenuNumber) {
         JSONObject jsonObject = null;
-        String directoryPath = "src\\test\\java\\WABP\\JsonData\\Input\\";
+        String directoryPath = "src/test/java/WABP/JsonData/Input/";
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(MenuNumber + ".json"));
         if (files != null && files.length > 0) {

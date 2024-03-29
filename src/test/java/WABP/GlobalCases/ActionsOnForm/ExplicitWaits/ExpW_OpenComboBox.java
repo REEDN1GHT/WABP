@@ -35,7 +35,7 @@ public class ExpW_OpenComboBox {
     public void waitList() {
         try {
             WebDriverWait driverWait = new WebDriverWait(driver,Duration.ofSeconds(3));
-            driverWait.until(driver1 -> driver.findElements(By.xpath("//vaadin-combo-box-item")).size()>1);
+            driverWait.until(driver1 -> !driver.findElements(By.xpath("//vaadin-combo-box-item")).isEmpty());
 
         } catch (Exception e) {
             logger.error("Error while waiting list after click", e.getStackTrace());

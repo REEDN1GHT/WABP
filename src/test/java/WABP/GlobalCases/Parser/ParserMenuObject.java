@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.json.JSONObject;
-import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -85,7 +84,7 @@ public class ParserMenuObject extends ConnectBD {
     public JSONObject MenuDataFromBudget24() {
         Map<String, Map<String, String>> dataMap = new HashMap<>();
         try {
-            Statement statement = getConnectionBudget23UKT().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Statement statement = getConnectionButest24().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet resultSet = statement.executeQuery(MenuFormData);
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int indexColumn = resultSetMetaData.getColumnCount();

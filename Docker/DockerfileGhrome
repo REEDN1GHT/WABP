@@ -1,7 +1,0 @@
-FROM openjdk:8-jre-slim-buster
-COPY google-chrome-stable_current_amd64.deb /google-chrome-stable_current_amd64.deb
-RUN apt-get update && apt-get install -y apt-transport-https
-RUN apt update && \
-    apt install libxss1 libgconf-2-4 libappindicator1 libindicator7 libnss3 wget -y && \
-#    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt install -y ./google-chrome-stable_current_amd64.deb
