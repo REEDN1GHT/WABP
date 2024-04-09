@@ -67,7 +67,7 @@ public class DynamicTestGenerator extends Driver {
         try {
             NTF.waitContentIntoInput();
             Assert.assertNotNull(driver.findElement(By
-                    .xpath("//vaadin-app-layout/vaadin-vertical-layout/div/vaadin-vertical-layout[2]")), "Форма не открылась");
+                    .xpath("//div[@class='tabs-page__content']")), "Форма не открылась");
             takesScreenShots.TakesScreenshotsSuccess("DocOpen", NameForm);
         } catch (Exception e){
             takesScreenShots.TakesScreenshotsErrors(e, NameForm);
